@@ -1,5 +1,4 @@
 import React,{useState} from "react";
-import { connect } from "react-redux";
 import {
   Form,
   Input,
@@ -98,7 +97,6 @@ const FormSizeDemo = () => {
     </>
   );
 };
-
-export default function AddUser() {
+export default function AddJurisdiction() {
   return <FormSizeDemo />;
 }
