@@ -2,11 +2,16 @@ import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
-import { HashRouter, BrowserRouter, Route } from "react-router-dom";
+import { HashRouter, BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/index";
 import MRoute from "./route/routes";
 import history from "./views/history";
+
+window.onselectstart = function () {
+  return false;
+};
+
 const Router =
   process.env.NODE_ENV === "production" ? BrowserRouter : HashRouter;
 ReactDOM.render(

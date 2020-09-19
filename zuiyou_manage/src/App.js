@@ -10,13 +10,20 @@ import {
   UsergroupDeleteOutlined,
   TeamOutlined,
   UserOutlined,
+  EditOutlined,
+  UserAddOutlined,
 } from "@ant-design/icons";
 
 import "./App.scss";
 
 const Home = lazy(() => import("./views/home/Home"));
 const Login = lazy(() => import("./views/login/Login"));
-const Mine = lazy(() => import("./views/mine/Mine"));
+const EditJurisdiction = lazy(() =>
+  import("./views/jurisdiction/EditJurisdiction")
+);
+const AddJurisdiction = lazy(() =>
+  import("./views/jurisdiction/AddJurisdiction")
+);
 const AddUser = lazy(() => import("./views/user/AddUser"));
 const EditUser = lazy(() => import("./views/user/EditUser"));
 const Reg = lazy(() => import("./views/login/Reg"));
@@ -46,14 +53,20 @@ class App extends React.PureComponent {
     secmenu: [
       [
         {
-          title: "个人中心",
+          title: "权限管理",
           icon: <UserOutlined />,
         },
         {
-          text: "个人信息",
-          name: "mine",
-          icon: <UserOutlined />,
-          path: "/app/mine",
+          text: "权限管理",
+          name: "EditJurisdiction",
+          icon: <EditOutlined />,
+          path: "/app/EditJurisdiction",
+        },
+        {
+          text: "申请权限",
+          name: "AddJurisdiction",
+          icon: <UserAddOutlined />,
+          path: "/app/AddJurisdiction",
         },
       ],
       [
@@ -70,7 +83,7 @@ class App extends React.PureComponent {
         {
           text: "用户编辑",
           name: "edituser",
-          icon: <UsergroupDeleteOutlined />,
+          icon: <SolutionOutlined />,
           path: "/app/edituser",
         },
       ],
@@ -120,7 +133,7 @@ class App extends React.PureComponent {
       });
     }
     this.state.current = pathname;
-    if (pathname == "/mine") {
+    if (pathname == "/EditJurisdiction") {
       this.state.subcurrent = "sub1";
     } else if (pathname == ("/adduser" || "/edituser")) {
       this.state.subcurrent = "sub2";
@@ -288,7 +301,14 @@ class App extends React.PureComponent {
                     <Route path="/login" component={Login}></Route>
                     <Route path="/reg" component={Reg}></Route>
                     <Route path="/app/Msg" component={Msg}></Route>
-                    <Route path="/app/mine" component={Mine}></Route>
+                    <Route
+                      path="/app/EditJurisdiction"
+                      component={EditJurisdiction}
+                    ></Route>
+                    <Route
+                      path="/app/AddJurisdiction"
+                      component={AddJurisdiction}
+                    ></Route>
                     <Route path="/app/adduser" component={AddUser}></Route>
                     <Route path="/app/edituser" component={EditUser}></Route>
                     <Redirect from="/" to="/app/home" exact></Redirect>

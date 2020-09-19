@@ -1,5 +1,4 @@
 import React,{useState} from "react";
-import { connect } from "react-redux";
 import {
   Form,
   Input,
@@ -13,7 +12,7 @@ import {
   Switch,
 } from 'antd';
 
-document.title = "添加用户"
+document.title = "申请权限"
 const FormSizeDemo = () => {
   const [componentSize, setComponentSize] = useState('default');
 
@@ -100,7 +99,6 @@ const FormSizeDemo = () => {
     </>
   );
 };
-
-export default function AddUser() {
+export default function AddJurisdiction() {
   return <FormSizeDemo />;
 }
