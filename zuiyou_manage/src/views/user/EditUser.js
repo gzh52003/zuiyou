@@ -1,6 +1,8 @@
 import React from "react";
 import {Table, Tag, Space} from 'antd'
 
+
+document.title = "用户编辑"
 const columns = [
   {
     title: 'Name',
