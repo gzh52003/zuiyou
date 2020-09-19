@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
-import { Route, Redirect, Switch, withRouter } from "react-router-dom";
-import { Layout, Menu, Breadcrumb, Avatar, Spin, Alert } from "antd";
+
+import { Route, Redirect, Switch, withRouter, Link } from "react-router-dom";
+import { Layout, Menu, Breadcrumb, Avatar, Spin, Alert, Button } from "antd";
 import {
   HomeOutlined,
   PieChartOutlined,
@@ -32,13 +33,13 @@ class App extends React.PureComponent {
         text: "首页",
         name: "home",
         icon: <HomeOutlined />,
-        path: "/home",
+        path: "/app/home",
       },
       {
         text: "动态信息",
         name: "msg",
         icon: <SolutionOutlined />,
-        path: "/msg",
+        path: "/app/msg",
       },
     ],
     // 二级菜单
@@ -52,7 +53,7 @@ class App extends React.PureComponent {
           text: "个人信息",
           name: "mine",
           icon: <UserOutlined />,
-          path: "/mine",
+          path: "/app/mine",
         },
       ],
       [
@@ -64,13 +65,13 @@ class App extends React.PureComponent {
           text: "添加用户",
           name: "adduser",
           icon: <UsergroupAddOutlined />,
-          path: "/adduser",
+          path: "/app/adduser",
         },
         {
           text: "用户编辑",
           name: "edituser",
           icon: <UsergroupDeleteOutlined />,
-          path: "/edituser",
+          path: "/app/edituser",
         },
       ],
     ],
@@ -78,8 +79,20 @@ class App extends React.PureComponent {
     subcurrent: "",
     routelist: [],
   };
+  // {!window.localStorage.getItem("user")
+  // ? (({ key }) => {
+  //     this.setState({ current: key });
+  //     return <Route path="/login" component={Login}></Route>;
+  //   })({ key: "Marlen" })
+  // : ""}
   gotopage = ({ key }) => {
     // console.log(item, key);
+
+    if (key == "/reg") {
+      key = "/reg";
+    } else {
+      !window.localStorage.getItem("user") ? (key = "/login") : (key = key);
+    }
     this.setState({
       current: key,
     });
@@ -116,9 +129,7 @@ class App extends React.PureComponent {
     }
     this.state.routelist.push(pathname.slice(1));
   }
-  componentDidMount() {
-    this.render();
-  }
+
   render() {
     // console.log("第一次", this.state.current);
     let { menu, secmenu } = this.state;
@@ -127,24 +138,61 @@ class App extends React.PureComponent {
         <Header className="Header_h1">
           <>
             <h1 style={{ color: "white", margin: 0, lineHeight: "64px" }}>
-              微博管理系统
+              知乎管理系统
             </h1>
             <div className="Header_h1">
-              <Avatar
-                style={{ backgroundColor: "#87d068" }}
-                size={38}
-                icon={<UserOutlined />}
-              />
-              <div style={{ paddingRight: "8px" }}></div>
-              <span
-                style={{
-                  color: "#1890ff",
-                  fontSize: "18px",
-                  cursor: "pointer",
-                }}
-              >
-                退出
-              </span>
+              {(() => {
+                console.log("sssss");
+                if (window.localStorage.getItem("user")) {
+                  return (
+                    <>
+                      <Avatar
+                        style={{ backgroundColor: "#87d068" }}
+                        size={38}
+                        icon={<UserOutlined />}
+                      />
+                      <div style={{ paddingRight: "8px" }}></div>
+                      <span
+                        onClick={() => this.gotopage({ key: "/login" })}
+                        style={{
+                          color: "#1890ff",
+                          fontSize: "18px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        退出
+                      </span>
+                    </>
+                  );
+                } else {
+                  return (
+                    <>
+                      <span
+                        // 不懂的看看下面的this
+                        onClick={() => this.gotopage({ key: "/login" })}
+                        style={{
+                          color: "#1890ff",
+                          fontSize: "18px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        登录
+                      </span>
+                      <div style={{ paddingRight: "12px" }}></div>
+                      <span
+                        onClick={this.gotopage.bind(null, { key: "/reg" })}
+                        style={{
+                          color: "#1890ff",
+                          fontSize: "18px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        注册
+                      </span>
+                    </>
+                  );
+                }
+              })()}
             </div>
           </>
         </Header>
@@ -236,14 +284,14 @@ class App extends React.PureComponent {
                   }
                 >
                   <Switch>
-                    <Route path="/home" component={Home}></Route>
+                    <Route path="/app/home" component={Home}></Route>
+                    <Route path="/login" component={Login}></Route>
                     <Route path="/reg" component={Reg}></Route>
-                    <Route path="/Login" component={Login}></Route>
-                    <Route path="/Msg" component={Msg}></Route>
-                    <Route path="/mine" component={Mine}></Route>
-                    <Route path="/adduser" component={AddUser}></Route>
-                    <Route path="/edituser" component={EditUser}></Route>
-                    <Redirect from="/" to="/home" exact></Redirect>
+                    <Route path="/app/Msg" component={Msg}></Route>
+                    <Route path="/app/mine" component={Mine}></Route>
+                    <Route path="/app/adduser" component={AddUser}></Route>
+                    <Route path="/app/edituser" component={EditUser}></Route>
+                    <Redirect from="/" to="/app/home" exact></Redirect>
                     <Route path="*" render={() => <div>404</div>}></Route>
                   </Switch>
                 </Suspense>
