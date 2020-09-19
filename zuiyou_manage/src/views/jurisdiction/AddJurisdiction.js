@@ -11,6 +11,8 @@ import {
   TreeSelect,
   Switch,
 } from 'antd';
+
+document.title = "申请权限"
 const FormSizeDemo = () => {
   const [componentSize, setComponentSize] = useState('default');
 

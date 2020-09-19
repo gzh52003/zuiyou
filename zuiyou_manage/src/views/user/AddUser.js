@@ -12,6 +12,8 @@ import {
   TreeSelect,
   Switch,
 } from 'antd';
+
+document.title = "添加用户"
 const FormSizeDemo = () => {
   const [componentSize, setComponentSize] = useState('default');
 
