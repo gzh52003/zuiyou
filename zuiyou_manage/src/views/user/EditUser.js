@@ -1,22 +1,26 @@
 import React from "react";
-import {Table, Tag, Space} from 'antd'
+import '../scss/editUser.scss'
+import { Table, Tag, Space, Input, Popconfirm, Select, Button } from 'antd';
+const { Search } = Input;
+const { Option } = Select;
 
 
-document.title = "用户编辑"
+document.title = "用户管理"
 const columns = [
   {
-    title: 'Name',
+    title: '用户名',
     dataIndex: 'name',
     key: 'name',
-    render: text => <a>{text}</a>,
+    render: text => <i>{text}</i>,
+    width: '20%',
   },
   {
-    title: 'Age',
+    title: '注册时间',
     dataIndex: 'age',
     key: 'age',
   },
   {
-    title: 'Address',
+    title: '性别',
     dataIndex: 'address',
     key: 'address',
   },
@@ -41,12 +45,18 @@ const columns = [
     ),
   },
   {
-    title: 'Action',
+    title: '操作',
     key: 'action',
-    render: (text, record) => (
+    render: () => (
       <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
+        <Select defaultValue="封停账户" style={{ width: 100 }} bordered={true}>
+          <Option value="1">封停1天</Option>
+          <Option value="3">封停3天</Option>
+          <Option value="7">封停7天</Option>
+        </Select>
+        <Popconfirm title="Are you sure？" okText="Yes" cancelText="No">
+          <Button style={{color:'red'}}>永久封停</Button>
+        </Popconfirm>
       </Space>
     ),
   },
@@ -76,5 +86,10 @@ const data = [
   },
 ];
 export default function EditUser() {
-  return (<Table columns={columns} dataSource={data} />);
+  return (
+    <>
+      <Search placeholder="Search by name" onSearch={value => console.log(value)} enterButton />
+      <Table columns={columns} dataSource={data} className="userTab" />
+    </>
+  );
 }

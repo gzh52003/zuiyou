@@ -263,13 +263,13 @@ class App extends React.PureComponent {
               </SubMenu> */}
             </Menu>
           </Sider>
-          <Layout className="site-layout">
+          <Layout className="site-layout" style={{overflow: 'hidden'}}>
             <Header className="site-layout-background" style={{ padding: 0 }} />
-            <Content style={{ margin: "0 16px" }}>
+            <Content style={{ margin: "0 16px"}}>
               <Breadcrumb style={{ margin: "16px 0" }}>
                 <Breadcrumb.Item>app</Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  {this.state.routelist[0] == "/app"
+                  {this.state.routelist[0] === "/app"
                     ? "home"
                     : this.state.routelist[0]}
                 </Breadcrumb.Item>
