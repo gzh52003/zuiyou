@@ -24,12 +24,12 @@ const EditJurisdiction = lazy(() =>
 const AddJurisdiction = lazy(() =>
   import("./views/jurisdiction/AddJurisdiction")
 );
-const AddUser = lazy(() => import("./views/user/AddUser"));
+// const AddUser = lazy(() => import("./views/user/AddUser"));
 const EditUser = lazy(() => import("./views/user/EditUser"));
 const Reg = lazy(() => import("./views/login/Reg"));
 const Msg = lazy(() => import("./views/msg/Msg"));
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 class App extends React.PureComponent {
   state = {
@@ -48,6 +48,12 @@ class App extends React.PureComponent {
         icon: <SolutionOutlined />,
         path: "/app/msg",
       },
+      {
+        text: "用户管理",
+        name: "edituser",
+        icon: <SolutionOutlined />,
+        path: "/app/edituser",
+      }
     ],
     // 二级菜单
     secmenu: [
@@ -67,24 +73,6 @@ class App extends React.PureComponent {
           name: "AddJurisdiction",
           icon: <UserAddOutlined />,
           path: "/app/AddJurisdiction",
-        },
-      ],
-      [
-        {
-          title: "用户管理",
-          icon: <TeamOutlined />,
-        },
-        {
-          text: "添加用户",
-          name: "adduser",
-          icon: <UsergroupAddOutlined />,
-          path: "/app/adduser",
-        },
-        {
-          text: "用户编辑",
-          name: "edituser",
-          icon: <SolutionOutlined />,
-          path: "/app/edituser",
         },
       ],
     ],
@@ -109,7 +97,6 @@ class App extends React.PureComponent {
     this.setState({
       current: key,
     });
-    // console.log("gotopage", this);
     this.go(key);
   };
   go = (path) => {
@@ -151,7 +138,7 @@ class App extends React.PureComponent {
         <Header className="Header_h1">
           <>
             <h1 style={{ color: "white", margin: 0, lineHeight: "64px" }}>
-              知乎管理系统
+              最右后台管理系统
             </h1>
             <div className="Header_h1">
               {(() => {
@@ -311,7 +298,7 @@ class App extends React.PureComponent {
                       path="/app/AddJurisdiction"
                       component={AddJurisdiction}
                     ></Route>
-                    <Route path="/app/adduser" component={AddUser}></Route>
+                    {/* <Route path="/app/adduser" component={AddUser}></Route> */}
                     <Route path="/app/edituser" component={EditUser}></Route>
                     <Redirect from="/app" to="/app/home" exact></Redirect>
                     <Route path="*" render={() => <div>404</div>}></Route>

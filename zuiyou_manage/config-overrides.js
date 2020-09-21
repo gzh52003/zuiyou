@@ -1,5 +1,5 @@
 const path = require("path");
-const { injectBabelPlugin } = require("react-app-rewired");
+
 const {
   override,
   addDecoratorsLegacy,
