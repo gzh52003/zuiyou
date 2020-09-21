@@ -1,0 +1,22 @@
+#normal_login {
+  width: 500px;
+  height: 280px;
+  margin: auto;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: #e9e1e1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 40px 30px 20px;
+}
+#login_big_box {
+  width: 100%;
+  height: 100%;
+  //   background-image: url(../../images/manage_background.jpg);
+  background: url(../../images/manage_background.jpg) no-repeat;
+  background-size: cover;
+}

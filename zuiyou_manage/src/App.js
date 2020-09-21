@@ -116,7 +116,7 @@ class App extends React.PureComponent {
     // console.log(this);
     this.props.history.push(path);
     this.state.routelist = [];
-    this.state.routelist.push(path.slice(1));
+    this.state.routelist.push(path.replace(/\/[a-z,A-Z]+\//, ""));
     // console.log("state.route", this.state.routelist);
   };
   onCollapse = (collapsed) => {
@@ -127,20 +127,20 @@ class App extends React.PureComponent {
   componentWillMount() {
     // console.log("componetWillMount", this.props.location.pathname);
     let { pathname } = this.props.location;
-    if (!this.state.current && this.props.location.pathname == "/") {
+    if (!this.state.current && this.props.location.pathname == "/app") {
       this.setState({
-        current: "/home",
+        current: "/app/home",
       });
     }
     this.state.current = pathname;
-    if (pathname == "/EditJurisdiction") {
+    if (pathname == "/app/EditJurisdiction") {
       this.state.subcurrent = "sub1";
-    } else if (pathname == ("/adduser" || "/edituser")) {
+    } else if (pathname == ("/app/adduser" || "/app/edituser")) {
       this.state.subcurrent = "sub2";
     } else {
       this.state.subcurrent = "";
     }
-    this.state.routelist.push(pathname.slice(1));
+    this.state.routelist.push(pathname.replace(/\/[a-z,A-Z]+\//, ""));
   }
 
   render() {
@@ -280,9 +280,11 @@ class App extends React.PureComponent {
             <Header className="site-layout-background" style={{ padding: 0 }} />
             <Content style={{ margin: "0 16px" }}>
               <Breadcrumb style={{ margin: "16px 0" }}>
-                <Breadcrumb.Item>system</Breadcrumb.Item>
+                <Breadcrumb.Item>app</Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  {!this.state.routelist[0] ? "home" : this.state.routelist[0]}
+                  {this.state.routelist[0] == "/app"
+                    ? "home"
+                    : this.state.routelist[0]}
                 </Breadcrumb.Item>
               </Breadcrumb>
               <div
@@ -311,7 +313,7 @@ class App extends React.PureComponent {
                     ></Route>
                     <Route path="/app/adduser" component={AddUser}></Route>
                     <Route path="/app/edituser" component={EditUser}></Route>
-                    <Redirect from="/" to="/app/home" exact></Redirect>
+                    <Redirect from="/app" to="/app/home" exact></Redirect>
                     <Route path="*" render={() => <div>404</div>}></Route>
                   </Switch>
                 </Suspense>
