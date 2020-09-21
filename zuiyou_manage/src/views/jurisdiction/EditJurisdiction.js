@@ -1,32 +1,33 @@
 import React from "react";
-import {Table, Input, Button, Space} from 'antd'
+import { Table, Input, Button, Space ,Select,Tag} from 'antd'
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
+const {Option} = Select;
 
 document.title = "权限管理"
 const data = [
   {
     key: '1',
     name: 'John Brown',
-    age: 32,
+    num: 32,
     address: 'New York No. 1 Lake Park',
   },
   {
     key: '2',
     name: 'Joe Black',
-    age: 42,
+    num: 42,
     address: 'London No. 1 Lake Park',
   },
   {
     key: '3',
     name: 'Jim Green',
-    age: 32,
+    num: 32,
     address: 'Sidney No. 1 Lake Park',
   },
   {
     key: '4',
     name: 'Jim Red',
-    age: 32,
+    num: 32,
     address: 'London No. 2 Lake Park',
   },
 ];
@@ -85,8 +86,8 @@ class JuTable extends React.Component {
           textToHighlight={text ? text.toString() : ''}
         />
       ) : (
-        text
-      ),
+          text
+        ),
   });
 
   handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -105,24 +106,52 @@ class JuTable extends React.Component {
   render() {
     const columns = [
       {
-        title: 'Name',
+        title: '帐号',
         dataIndex: 'name',
         key: 'name',
-        width: '30%',
+        width: '20%',
         ...this.getColumnSearchProps('name'),
       },
       {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
+        title: '加入时间',
+        dataIndex: 'num',
+        key: 'num',
         width: '20%',
         ...this.getColumnSearchProps('age'),
       },
       {
-        title: 'Address',
+        title: '评审贡献',
+        dataIndex: 'num',
+        key: 'num',
+        width: '20%',
+        ...this.getColumnSearchProps('age'),
+      },
+      {
+        title: '帐号权限',
         dataIndex: 'address',
         key: 'address',
-        ...this.getColumnSearchProps('address'),
+        width: '20%',
+        render:()=>(
+          <>
+            <Tag color="gold">管理者</Tag>
+            <Tag color="blue">审评员</Tag>
+            <Tag color="#ccc">禁用</Tag>
+          </>
+        ),
+        // ...this.getColumnSearchProps('address'),
+      },
+      {
+        title: '操作',
+        key: 'action',
+        render: () => (
+          <Space size="middle">
+            <Select defaultValue="spy" style={{ width: 90 }} bordered={false}>
+              <Option value="spy">审评员</Option>
+              <Option value="glz">管理者</Option>
+            </Select>
+            <Button size='small' danger>禁用</Button>
+          </Space>
+        ),
       },
     ];
     return <Table columns={columns} dataSource={data} />;
