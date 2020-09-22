@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from "react";
+import { Route, Redirect, Switch} from "react-router-dom";
+<<<<<<< Updated upstream
+=======
+import { Flex } from "antd-mobile";
+>>>>>>> Stashed changes
+import "./App.scss";
+import "antd-mobile/dist/antd-mobile.css";
+const Footer = lazy(() => import("./Footer"));
+const Home = lazy(() => import("./views/Home"));
+const Found = lazy(() => import("./views/Found"));
+const News = lazy(() => import("./views/News"));
+const Mine = lazy(() => import("./views/Mine"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    {/* <Flex direction="column"> */}
+    <div className="flex-container">
+        <Suspense
+          fallback={
+            <div>内容加载中</div>
+          }
+          >
+          <main className="mainer">
+          <Switch>
+            <Route path="/Home" component={Home}></Route>
+            <Route path="/Found" component={Found}></Route>
+            <Route path="/News" component={News}></Route>
+            <Route path="/Mine" component={Mine}></Route>
+            <Redirect from="/" to="/home" exact></Redirect>
+            <Route path="*" render={() => <div>404</div>}></Route>
+          </Switch>
+          </main>
+          <Footer></Footer>
+        </Suspense>
     </div>
+    {/* </Flex> */}
+    </>
   );
 }
-
 export default App;

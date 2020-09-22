@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from "react";
-
-import { Route, Redirect, Switch, withRouter, Link } from "react-router-dom";
-import { Layout, Menu, Breadcrumb, Avatar, Spin, Alert, Button } from "antd";
+import { Route, Redirect, Switch, withRouter } from "react-router-dom";
+import { Layout, Menu, Breadcrumb, Avatar, Spin, Alert } from "antd";
 import {
   HomeOutlined,
   PieChartOutlined,
@@ -11,25 +10,22 @@ import {
   TeamOutlined,
   UserOutlined,
   EditOutlined,
-  UserAddOutlined,
+  UserAddOutlined
 } from "@ant-design/icons";
 
 import "./App.scss";
 
 const Home = lazy(() => import("./views/home/Home"));
 const Login = lazy(() => import("./views/login/Login"));
-const EditJurisdiction = lazy(() =>
-  import("./views/jurisdiction/EditJurisdiction")
-);
-const AddJurisdiction = lazy(() =>
-  import("./views/jurisdiction/AddJurisdiction")
-);
-// const AddUser = lazy(() => import("./views/user/AddUser"));
+const EditJurisdiction = lazy(() => import("./views/jurisdiction/EditJurisdiction"));
+const AddJurisdiction = lazy(() => import("./views/jurisdiction/AddJurisdiction"));
+const AddUser = lazy(() => import("./views/user/AddUser"));
 const EditUser = lazy(() => import("./views/user/EditUser"));
 const Reg = lazy(() => import("./views/login/Reg"));
-const Msg = lazy(() => import("./views/msg/Msg"));
+const Invitation = lazy(() => import("./views/msg/Invitation"));
+const Comment = lazy(() => import("./views/msg/Comment"));
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 class App extends React.PureComponent {
   state = {
@@ -40,24 +36,30 @@ class App extends React.PureComponent {
         text: "首页",
         name: "home",
         icon: <HomeOutlined />,
-        path: "/app/home",
+        path: "/home",
       },
-      {
-        text: "动态信息",
-        name: "msg",
-        icon: <SolutionOutlined />,
-        path: "/app/msg",
-      },
-      {
-        text: "用户管理",
-        name: "edituser",
-        icon: <SolutionOutlined />,
-        path: "/app/edituser",
-      }
     ],
     // 二级菜单
     secmenu: [
       [
+        {
+          title: "动态信息",
+          icon: <SolutionOutlined />,
+        },
+        {
+          text: "帖子管理",
+          name: "Invitation",
+          icon: <EditOutlined />,
+          path: "/Invitation",
+        },
+        {
+          text: "评论管理",
+          name: "Comment",
+          icon: <EditOutlined />,
+          path: "/Comment",
+        }
+      ],
+        [
         {
           title: "权限管理",
           icon: <UserOutlined />,
@@ -66,13 +68,31 @@ class App extends React.PureComponent {
           text: "权限管理",
           name: "EditJurisdiction",
           icon: <EditOutlined />,
-          path: "/app/EditJurisdiction",
+          path: "/EditJurisdiction",
         },
         {
           text: "申请权限",
           name: "AddJurisdiction",
           icon: <UserAddOutlined />,
-          path: "/app/AddJurisdiction",
+          path: "/AddJurisdiction",
+        },
+      ],
+      [
+        {
+          title: "用户管理",
+          icon: <TeamOutlined />,
+        },
+        {
+          text: "添加用户",
+          name: "adduser",
+          icon: <UsergroupAddOutlined />,
+          path: "/adduser",
+        },
+        {
+          text: "用户编辑",
+          name: "edituser",
+          icon: <SolutionOutlined />,
+          path: "/edituser",
         },
       ],
     ],
@@ -80,23 +100,12 @@ class App extends React.PureComponent {
     subcurrent: "",
     routelist: [],
   };
-  // {!window.localStorage.getItem("user")
-  // ? (({ key }) => {
-  //     this.setState({ current: key });
-  //     return <Route path="/login" component={Login}></Route>;
-  //   })({ key: "Marlen" })
-  // : ""}
   gotopage = ({ key }) => {
     // console.log(item, key);
-
-    if (key == "/reg") {
-      key = "/reg";
-    } else {
-      !window.localStorage.getItem("user") ? (key = "/login") : (key = key);
-    }
     this.setState({
       current: key,
     });
+    // console.log("gotopage", this);
     this.go(key);
   };
   go = (path) => {
@@ -120,16 +129,18 @@ class App extends React.PureComponent {
       });
     }
     this.state.current = pathname;
-    if (pathname === "/EditJurisdiction") {
+    if (pathname == "/EditJurisdiction") {
       this.state.subcurrent = "sub1";
-    } else if (pathname === ("/adduser" || "/edituser")) {
+    } else if (pathname == ("/adduser" || "/edituser")) {
       this.state.subcurrent = "sub2";
     } else {
       this.state.subcurrent = "";
     }
     this.state.routelist.push(pathname.slice(1));
   }
-
+  componentDidMount() {
+    this.render();
+  }
   render() {
     // console.log("第一次", this.state.current);
     let { menu, secmenu } = this.state;
@@ -138,61 +149,24 @@ class App extends React.PureComponent {
         <Header className="Header_h1">
           <>
             <h1 style={{ color: "white", margin: 0, lineHeight: "64px" }}>
-              最右后台管理系统
+              微博管理系统
             </h1>
             <div className="Header_h1">
-              {(() => {
-                console.log("sssss");
-                if (window.localStorage.getItem("user")) {
-                  return (
-                    <>
-                      <Avatar
-                        style={{ backgroundColor: "#87d068" }}
-                        size={38}
-                        icon={<UserOutlined />}
-                      />
-                      <div style={{ paddingRight: "8px" }}></div>
-                      <span
-                        onClick={() => this.gotopage({ key: "/login" })}
-                        style={{
-                          color: "#1890ff",
-                          fontSize: "18px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        退出
-                      </span>
-                    </>
-                  );
-                } else {
-                  return (
-                    <>
-                      <span
-                        // 不懂的看看下面的this
-                        onClick={() => this.gotopage({ key: "/login" })}
-                        style={{
-                          color: "#1890ff",
-                          fontSize: "18px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        登录
-                      </span>
-                      <div style={{ paddingRight: "12px" }}></div>
-                      <span
-                        onClick={this.gotopage.bind(null, { key: "/reg" })}
-                        style={{
-                          color: "#1890ff",
-                          fontSize: "18px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        注册
-                      </span>
-                    </>
-                  );
-                }
-              })()}
+              <Avatar
+                style={{ backgroundColor: "#87d068" }}
+                size={38}
+                icon={<UserOutlined />}
+              />
+              <div style={{ paddingRight: "8px" }}></div>
+              <span
+                style={{
+                  color: "#1890ff",
+                  fontSize: "18px",
+                  cursor: "pointer",
+                }}
+              >
+                退出
+              </span>
             </div>
           </>
         </Header>
@@ -284,21 +258,16 @@ class App extends React.PureComponent {
                   }
                 >
                   <Switch>
-                    <Route path="/app/home" component={Home}></Route>
-                    <Route path="/login" component={Login}></Route>
+                    <Route path="/home" component={Home}></Route>
                     <Route path="/reg" component={Reg}></Route>
-                    <Route path="/app/Msg" component={Msg}></Route>
-                    <Route
-                      path="/app/EditJurisdiction"
-                      component={EditJurisdiction}
-                    ></Route>
-                    <Route
-                      path="/app/AddJurisdiction"
-                      component={AddJurisdiction}
-                    ></Route>
-                    {/* <Route path="/app/adduser" component={AddUser}></Route> */}
-                    <Route path="/app/edituser" component={EditUser}></Route>
-                    <Redirect from="/" to="/app/home" exact></Redirect>
+                    <Route path="/Login" component={Login}></Route>
+                    <Route path="/Invitation" component={Invitation}></Route>
+                    <Route path="/Comment" component={Comment}></Route>
+                    <Route path="/EditJurisdiction" component={EditJurisdiction}></Route>
+                    <Route path="/AddJurisdiction" component={AddJurisdiction}></Route>
+                    <Route path="/adduser" component={AddUser}></Route>
+                    <Route path="/edituser" component={EditUser}></Route>
+                    <Redirect from="/" to="/home" exact></Redirect>
                     <Route path="*" render={() => <div>404</div>}></Route>
                   </Switch>
                 </Suspense>

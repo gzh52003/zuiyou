@@ -1,0 +1,54 @@
+*{
+  padding: 0;
+  margin:0;
+}
+html,body{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+#app{
+  width: 100%;
+  height: 100%;
+  .am-tab-bar{
+    height: 100%;
+    .am-tabs-bottom{
+      height: 100%;
+      display: flex;
+      overflow: hidden;
+      flex-direction: column;
+      .am-tabs-content-wrap{
+        height: 94%;
+        flex: 1;
+      }
+      .am-tabs-tab-bar-wrap{
+        height: 6%;
+      }
+    }
+  }
+  #tab-bar.demo {
+    display: flex;
+    flex-direction: column;
+  }
+  #tab-bar .demoName {
+    height: 40px;
+  }
+  #tab-bar .demo-preview-item .am-tab-bar {
+    background-color: white;
+  }
+  
+  .am-tabs-horizontal {
+    // height: 100%;
+  }
+  .am-tabs-tab-bar-wrap {
+    .am-tab-bar-bar {
+      // width: 80px;
+      text-align: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+      }
+  }
+}
+

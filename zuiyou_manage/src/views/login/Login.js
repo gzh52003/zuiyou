@@ -1,29 +1,87 @@
 import React from "react";
+import { Form, Input, Button, Checkbox } from "antd";
+import { UserOutlined, LockOutlined, SafetyOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 // 调用action中的方法
 import userAction, { login } from "../../store/actions/user";
 // 用于合并action
 import { bindActionCreators } from "redux";
+import "../scss/login.scss";
 export default class Login extends React.Component {
-  handleSubmit = (e) => {
-    this.props.history.push({ pathname: "/app" });
+  handleSubmit = (value, e) => {
+    // this.props.history.push({ pathname: "/app" });
+    console.log(value);
   };
-  handleSubmit1 = (e) => {
-    this.props.history.push({ pathname: "/reg" });
+  aa = (changedValues, allValues) => {
+    console.log("changedValues", changedValues);
+    console.log("allValues", allValues);
+  };
+  onFinish = (values) => {
+    console.log("Received values of form: ", values);
+    this.handleSubmit(values);
   };
   render() {
     return (
-      <>
-        <div>{"我是Login组件"}</div>
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" placeholder="userName" />
-          <input type="text" placeholder="repo" />
-          <button type="submit">Go App</button>
-        </form>
-        <form onSubmit={this.handleSubmit1}>
-          <button type="submit">Go Reg</button>
-        </form>
-      </>
+      <div
+        id="login_big_box"
+        style={{ backGround: "../../images/manage_background.jpg" }}
+      >
+        <Form
+          name="normal_login"
+          className="login-form"
+          initialValues={{ remember: true }}
+          // onValuesChange={this.aa(changedValues, allValues)}
+          onFinish={this.onFinish}
+        >
+          <Form.Item
+            name="username"
+            rules={[{ required: true, message: "请输入用户名!" }]}
+          >
+            <Input
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Username"
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: "请输入密码!" }]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Password"
+            />
+          </Form.Item>
+          <Form.Item
+            name="code"
+            rules={[{ required: true, message: "请输入验证码!" }]}
+          >
+            <div className="demo">
+              <Input
+                prefix={<SafetyOutlined className="site-form-item-icon" />}
+                placeholder="code"
+              />
+              <div className="code ant-input">2244</div>
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <Form.Item name="remember" valuePropName="checked" noStyle>
+              <Checkbox>记住密码</Checkbox>
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+                onClick={this.handleSubmit}
+              >
+                登录
+              </Button>
+            </Form.Item>
+          </Form.Item>
+        </Form>
+      </div>
     );
   }
 }
