@@ -1,5 +1,5 @@
 #normal_login {
-  width: 500px;
+  width: 400px;
   height: 280px;
   margin: auto;
   position: fixed;
@@ -7,11 +7,13 @@
   right: 0;
   bottom: 0;
   top: 0;
-  background-color: #e9e1e1;
+  background-color: #f6f6f6;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   padding: 40px 30px 20px;
+  border-radius: 20px;
+  box-shadow: 10px 8px 10px rgb(88, 88, 88);
 }
 #login_big_box {
   width: 100%;
@@ -19,4 +21,26 @@
   //   background-image: url(../../images/manage_background.jpg);
   background: url(../../images/manage_background.jpg) no-repeat;
   background-size: cover;
+}
+.ant-form-item-control-input-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .ant-row,
+  .ant-form-item {
+    margin: 0;
+  }
+}
+#normal_login_code {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  .code {
+    width: 100px;
+    // border: 1px solid gray;
+    background-color: rgb(230, 230, 230);
+    text-align: center;
+    cursor: pointer;
+  }
 }
