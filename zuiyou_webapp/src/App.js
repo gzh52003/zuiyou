@@ -1,6 +1,12 @@
 import React, { PureComponent, Component } from "react";
 import { TabBar } from "antd-mobile";
 import "./scss/App.scss";
+import { createFromIconfontCN } from '@ant-design/icons';
+const MyIcon = createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_1608522_0jsq0eqllha.js', // 在 iconfont.cn 上生成
+});
+
+
 class App extends Component {
   state = {
     selectedTab: "redTab",
