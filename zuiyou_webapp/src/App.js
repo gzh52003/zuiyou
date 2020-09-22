@@ -20,7 +20,7 @@ class App extends Component {
         <div style={{ paddingTop: 60 }}>
           Clicked “{pageText}” tab， show “{pageText}” information
         </div>
-        <a
+        <p
           style={{
             display: "block",
             marginTop: 40,
@@ -35,8 +35,8 @@ class App extends Component {
           }}
         >
           Click to show/hide tab-bar
-        </a>
-        <a
+        </p>
+        <p
           style={{ display: "block", marginBottom: 600, color: "#108ee9" }}
           onClick={(e) => {
             e.preventDefault();
@@ -46,7 +46,7 @@ class App extends Component {
           }}
         >
           Click to switch fullscreen
-        </a>
+        </p>
       </div>
     );
   };
@@ -54,11 +54,12 @@ class App extends Component {
   render() {
     return (
       <div
-        style={
-          this.state.fullScreen
-            ? { position: "fixed", height: "100%", width: "100%", top: 0 }
-            : { height: 400 }
-        }
+      style={{height:"100%"}}
+        // style={
+        //   this.state.fullScreen
+        //     ? { position: "fixed", height: "100%", width: "100%", top: 0 }
+        //     : { height: 400 }
+        // }
       >
         <TabBar
           unselectedTintColor="#949494"

@@ -4,10 +4,7 @@ import { Route, Redirect, Switch, withRouter, Link } from "react-router-dom";
 import { Layout, Menu, Breadcrumb, Avatar, Spin, Alert, Button } from "antd";
 import {
   HomeOutlined,
-  PieChartOutlined,
-  UsergroupAddOutlined,
   SolutionOutlined,
-  UsergroupDeleteOutlined,
   TeamOutlined,
   UserOutlined,
   EditOutlined,
@@ -51,7 +48,7 @@ class App extends React.PureComponent {
       {
         text: "用户管理",
         name: "edituser",
-        icon: <SolutionOutlined />,
+        icon: <TeamOutlined />,
         path: "/app/edituser",
       }
     ],
