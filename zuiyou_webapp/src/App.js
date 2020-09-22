@@ -1,9 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Redirect, Switch} from "react-router-dom";
-<<<<<<< Updated upstream
-=======
 import { Flex } from "antd-mobile";
->>>>>>> Stashed changes
 import "./App.scss";
 import "antd-mobile/dist/antd-mobile.css";
 const Footer = lazy(() => import("./Footer"));
