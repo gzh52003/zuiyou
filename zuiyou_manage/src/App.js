@@ -10,16 +10,20 @@ import {
   TeamOutlined,
   UserOutlined,
   EditOutlined,
-  UserAddOutlined
+  UserAddOutlined,
 } from "@ant-design/icons";
 
 import "./App.scss";
 
 const Home = lazy(() => import("./views/home/Home"));
 const Login = lazy(() => import("./views/login/Login"));
-const EditJurisdiction = lazy(() => import("./views/jurisdiction/EditJurisdiction"));
-const AddJurisdiction = lazy(() => import("./views/jurisdiction/AddJurisdiction"));
-const AddUser = lazy(() => import("./views/user/AddUser"));
+const EditJurisdiction = lazy(() =>
+  import("./views/jurisdiction/EditJurisdiction")
+);
+const AddJurisdiction = lazy(() =>
+  import("./views/jurisdiction/AddJurisdiction")
+);
+// const AddUser = lazy(() => import("./views/user/AddUser"));
 const EditUser = lazy(() => import("./views/user/EditUser"));
 const Reg = lazy(() => import("./views/login/Reg"));
 const Invitation = lazy(() => import("./views/msg/Invitation"));
@@ -36,7 +40,7 @@ class App extends React.PureComponent {
         text: "首页",
         name: "home",
         icon: <HomeOutlined />,
-        path: "/home",
+        path: "/manage/home",
       },
     ],
     // 二级菜单
@@ -50,16 +54,16 @@ class App extends React.PureComponent {
           text: "帖子管理",
           name: "Invitation",
           icon: <EditOutlined />,
-          path: "/Invitation",
+          path: "/manage/Invitation",
         },
         {
           text: "评论管理",
           name: "Comment",
           icon: <EditOutlined />,
-          path: "/Comment",
-        }
+          path: "/manage/Comment",
+        },
       ],
-        [
+      [
         {
           title: "权限管理",
           icon: <UserOutlined />,
@@ -68,13 +72,13 @@ class App extends React.PureComponent {
           text: "权限管理",
           name: "EditJurisdiction",
           icon: <EditOutlined />,
-          path: "/EditJurisdiction",
+          path: "/manage/EditJurisdiction",
         },
         {
           text: "申请权限",
           name: "AddJurisdiction",
           icon: <UserAddOutlined />,
-          path: "/AddJurisdiction",
+          path: "/manage/AddJurisdiction",
         },
       ],
       [
@@ -82,17 +86,17 @@ class App extends React.PureComponent {
           title: "用户管理",
           icon: <TeamOutlined />,
         },
-        {
-          text: "添加用户",
-          name: "adduser",
-          icon: <UsergroupAddOutlined />,
-          path: "/adduser",
-        },
+        // {
+        //   text: "添加用户",
+        //   name: "adduser",
+        //   icon: <UsergroupAddOutlined />,
+        //   path: "/adduser",
+        // },
         {
           text: "用户编辑",
           name: "edituser",
           icon: <SolutionOutlined />,
-          path: "/edituser",
+          path: "/manage/edituser",
         },
       ],
     ],
@@ -112,8 +116,8 @@ class App extends React.PureComponent {
     // console.log(this);
     this.props.history.push(path);
     this.state.routelist = [];
-    this.state.routelist.push(path.slice(1));
-    // console.log("state.route", this.state.routelist);
+    this.state.routelist.push(path.replace(/\/[a-zA-Z]+\//, ""));
+    console.log("state.route", this.state.routelist);
   };
   onCollapse = (collapsed) => {
     // console.log(collapsed);
@@ -122,21 +126,27 @@ class App extends React.PureComponent {
   };
   componentWillMount() {
     // console.log("componetWillMount", this.props.location.pathname);
+
     let { pathname } = this.props.location;
-    if (!this.state.current && this.props.location.pathname == "/") {
+    if (!this.state.current && this.props.location.pathname == "/manage") {
       this.setState({
-        current: "/home",
+        current: "/manage/home",
       });
     }
     this.state.current = pathname;
-    if (pathname == "/EditJurisdiction") {
+    if (pathname == ("/manage/Invitation" || "/manage/Comment")) {
       this.state.subcurrent = "sub1";
-    } else if (pathname == ("/adduser" || "/edituser")) {
+    } else if (
+      pathname == ("/manage/EditJurisdiction" || "/manage/AddJurisdiction")
+    ) {
       this.state.subcurrent = "sub2";
+    } else if (pathname == "/manage/edituser") {
+      this.state.subcurrent = "sub3";
     } else {
       this.state.subcurrent = "";
     }
-    this.state.routelist.push(pathname.slice(1));
+    this.state.routelist.push(pathname.replace(/\/[a-zA-Z]+\//, ""));
+    console.log("this.state.subcurrent", this.state.subcurrent);
   }
   componentDidMount() {
     this.render();
@@ -241,9 +251,12 @@ class App extends React.PureComponent {
             <Header className="site-layout-background" style={{ padding: 0 }} />
             <Content style={{ margin: "0 16px" }}>
               <Breadcrumb style={{ margin: "16px 0" }}>
-                <Breadcrumb.Item>system</Breadcrumb.Item>
+                <Breadcrumb.Item>manage</Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  {!this.state.routelist[0] ? "home" : this.state.routelist[0]}
+                  {this.state.routelist[0] == "/manage"
+                    ? "home"
+                    : this.state.routelist[0]}
+                  {console.log("testtest", this.state.routelist[0])}
                 </Breadcrumb.Item>
               </Breadcrumb>
               <div
@@ -258,16 +271,25 @@ class App extends React.PureComponent {
                   }
                 >
                   <Switch>
-                    <Route path="/home" component={Home}></Route>
-                    <Route path="/reg" component={Reg}></Route>
-                    <Route path="/Login" component={Login}></Route>
-                    <Route path="/Invitation" component={Invitation}></Route>
-                    <Route path="/Comment" component={Comment}></Route>
-                    <Route path="/EditJurisdiction" component={EditJurisdiction}></Route>
-                    <Route path="/AddJurisdiction" component={AddJurisdiction}></Route>
-                    <Route path="/adduser" component={AddUser}></Route>
-                    <Route path="/edituser" component={EditUser}></Route>
-                    <Redirect from="/" to="/home" exact></Redirect>
+                    <Route path="/manage/home" component={Home}></Route>
+                    <Route path="/manage/reg" component={Reg}></Route>
+                    <Route path="/manage/Login" component={Login}></Route>
+                    <Route
+                      path="/manage/Invitation"
+                      component={Invitation}
+                    ></Route>
+                    <Route path="/manage/Comment" component={Comment}></Route>
+                    <Route
+                      path="/manage/EditJurisdiction"
+                      component={EditJurisdiction}
+                    ></Route>
+                    <Route
+                      path="/manage/AddJurisdiction"
+                      component={AddJurisdiction}
+                    ></Route>
+                    {/* <Route path="/adduser" component={AddUser}></Route> */}
+                    <Route path="/manage/edituser" component={EditUser}></Route>
+                    <Redirect from="/manage" to="/manage/home" exact></Redirect>
                     <Route path="*" render={() => <div>404</div>}></Route>
                   </Switch>
                 </Suspense>

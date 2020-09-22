@@ -2,15 +2,23 @@ import React from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined, SafetyOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
+import { post, get } from "../../utils/request";
 // 调用action中的方法
 import userAction, { login } from "../../store/actions/user";
 // 用于合并action
 import { bindActionCreators } from "redux";
 import "../scss/login.scss";
 export default class Login extends React.Component {
-  handleSubmit = (value, e) => {
+  state = {
+    vcode: "",
+  };
+  handleSubmit = async (value, e) => {
     // this.props.history.push({ pathname: "/app" });
     console.log(value);
+    const result = await get("/login")
+      .then((res) => JSON.stringify(res))
+      .catch("错误");
+    console.log(result);
   };
   aa = (changedValues, allValues) => {
     console.log("changedValues", changedValues);
@@ -20,7 +28,31 @@ export default class Login extends React.Component {
     console.log("Received values of form: ", values);
     this.handleSubmit(values);
   };
+
+  getVcode = async () => {
+    const vcode = await get("/vcode").then((res) => res.data);
+    console.log(vcode);
+    // react只能通过setState修改state的值
+    this.setState({
+      vcode: vcode,
+    });
+    console.log(this.state.vcode);
+    window.localStorage.setItem("vcode", vcode);
+    this.render();
+    return vcode;
+  };
+  async componentWillMount() {
+    // 用户登录为过时，就跳转到原页面
+    if (window.localStorage.getItem("adminUserType")) {
+      this.props.history.push({ pathname: "/manage" });
+      // this.handleSubmit();
+    } else {
+      const result = await this.getVcode();
+      window.localStorage.setItem("vcode", result);
+    }
+  }
   render() {
+    const str = this.state.vcode;
     return (
       <div
         id="login_big_box"
@@ -62,7 +94,13 @@ export default class Login extends React.Component {
                 prefix={<SafetyOutlined className="site-form-item-icon" />}
                 placeholder="code"
               />
-              <div className="code ant-input">2244</div>
+              <div
+                className="code ant-input"
+                onClick={async () => await this.getVcode()}
+                dangerouslySetInnerHTML={{
+                  __html: str,
+                }}
+              ></div>
             </div>
           </Form.Item>
           <Form.Item>
