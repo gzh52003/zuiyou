@@ -9,7 +9,11 @@
     "antd": "^4.6.4",
     "axios": "^0.20.0",
     "crypto-js": "^4.0.0",
+<<<<<<< Updated upstream
     "history": "^5.0.0",
+=======
+    "rc-queue-anim": "^1.8.5",
+>>>>>>> Stashed changes
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-highlight-words": "^0.16.0",
