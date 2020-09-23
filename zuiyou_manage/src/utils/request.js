@@ -5,11 +5,13 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: "localhost:3000",
+  // baseURL: "42.194.179.50",
+  baseURL: "http://42.194.179.50/zyapi",
+
   withCredentials: true,
 });
 
-export async function get(url, data, config = {}) {
+export async function get(url, data = {}, config = {}) {
   const { data: result } = await request({
     ...config,
     url,

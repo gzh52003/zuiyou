@@ -15,7 +15,7 @@ export default class MRoute extends Component {
     return (
       <Switch>
         <Route path="/login" component={Login}></Route>
-        <Route path="/app" component={App}></Route>
+        <Route path="/manage" component={App}></Route>
         <Route path="/reg" component={Reg}></Route>
         <Redirect from="/" to="/login" exact></Redirect>
       </Switch>
