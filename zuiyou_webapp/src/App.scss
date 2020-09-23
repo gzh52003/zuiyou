@@ -4,6 +4,11 @@ body,
 .mainer,
 .am-flexbox {
   height: 100%;
+
+}
+#root{
+  position: relative;
+  overflow: hidden;
 }
 
 .App {

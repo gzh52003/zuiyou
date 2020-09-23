@@ -1,18 +1,20 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense ,useContext } from "react";
 import { Route, Redirect, Switch} from "react-router-dom";
 import "./App.scss";
 import "antd-mobile/dist/antd-mobile.css";
+import ToInvitate from "./views/ToInvitate"
+import {GlobalContext} from "./store"
 const Footer = lazy(() => import("./Footer"));
 const Home = lazy(() => import("./views/Home"));
 const Found = lazy(() => import("./views/Found"));
 const News = lazy(() => import("./views/News"));
 const Mine = lazy(() => import("./views/Mine"));
-
 function App() {
+  const {state,dispatch} = useContext(GlobalContext);
   return (
     <>
-    {/* <Flex direction="column"> */}
-    <div className="flex-container">
+    <ToInvitate></ToInvitate>
+    <div className="flex-container" style={{display:state.showInvitate?"none":"flex"}}>
         <Suspense
           fallback={
             <div>内容加载中</div>
@@ -30,8 +32,9 @@ function App() {
           </main>
           <Footer></Footer>
         </Suspense>
+
     </div>
-    {/* </Flex> */}
+
     </>
   );
 }

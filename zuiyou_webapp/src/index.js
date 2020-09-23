@@ -1,18 +1,19 @@
+import React, { useReducer } from "react";
+import ReactDOM from "react-dom";
+import { HashRouter, BrowserRouter } from "react-router-dom";
+import App from "./App";
+import Provider from "./store";
+import * as serviceWorker from "./serviceWorker";
+const Router =
+  process.env.NODE_ENV === "production" ? BrowserRouter : HashRouter;
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {HashRouter,BrowserRouter} from 'react-router-dom'
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-const Router = process.env.NODE_ENV === 'production' ? BrowserRouter : HashRouter;
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider>
     <Router>
       <App />
     </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
-
+  </Provider>,
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
