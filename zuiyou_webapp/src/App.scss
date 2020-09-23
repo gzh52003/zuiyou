@@ -32,9 +32,14 @@ body,
         flex: 0 0;
       }
       .am-tabs-tab-bar-wrap {
+<<<<<<< HEAD
         height: 100%;
         .am-tabs-tab-bar {
           height: 100%;
+=======
+        .am-tabs-tab-bar {
+          height: 10vh;
+>>>>>>> b1f463561a41ba63e05897b90e0811a9b39416ff
         }
         .am-tab-bar-bar{
           height: 100%;
