@@ -5,7 +5,10 @@ body,
 .am-flexbox {
   height: 100%;
 }
-
+#root{
+  overflow: hidden;
+  position: relative;
+}
 .App {
   text-align: center;
   height: 100%;
@@ -17,7 +20,7 @@ body,
   flex-direction: column;
 
   .mainer {
-    flex: 10;
+    flex: 13;
   }
 
   .am-tab-bar {
@@ -26,14 +29,18 @@ body,
       display: flex;
       justify-content: center;
       flex: 0 0;
-      height: auto;
+      // height: auto;
       .am-tabs-content-wrap {
         height: 0;
         flex: 0 0;
       }
       .am-tabs-tab-bar-wrap {
+        height: 100%;
         .am-tabs-tab-bar {
-          height: 10vh;
+          height: 100%;
+        }
+        .am-tab-bar-bar{
+          height: 100%;
         }
       }
 
