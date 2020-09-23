@@ -1,6 +1,7 @@
 import React,{useReducer} from 'react'
 const initialState={
-    showInvitate:false
+    showInvitate:false,
+    
 }
 
 function rootReducer(state,action){
