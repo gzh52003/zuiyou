@@ -5,7 +5,10 @@ body,
 .am-flexbox {
   height: 100%;
 }
-
+#root{
+  overflow: hidden;
+  position: relative;
+}
 .App {
   text-align: center;
   height: 100%;
@@ -22,6 +25,10 @@ body,
 
   .am-tab-bar {
     flex: 1;
+    svg{
+      font-size: 22px;
+      z-index: 10;
+    }
     .am-tabs {
       display: flex;
       justify-content: center;
@@ -32,11 +39,13 @@ body,
         flex: 0 0;
       }
       .am-tabs-tab-bar-wrap {
+        height: 100%;
         .am-tabs-tab-bar {
-          height: 10vh;
+          height: 100%;
         }
         .am-tab-bar-bar{
           height: 100%;
+          border-top: #eeeeee 1px solid;
         }
       }
 
