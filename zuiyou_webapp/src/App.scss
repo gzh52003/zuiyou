@@ -17,7 +17,7 @@ body,
   flex-direction: column;
 
   .mainer {
-    flex: 10;
+    flex: 13;
   }
 
   .am-tab-bar {
@@ -26,7 +26,7 @@ body,
       display: flex;
       justify-content: center;
       flex: 0 0;
-      height: auto;
+      // height: auto;
       .am-tabs-content-wrap {
         height: 0;
         flex: 0 0;
@@ -34,6 +34,9 @@ body,
       .am-tabs-tab-bar-wrap {
         .am-tabs-tab-bar {
           height: 10vh;
+        }
+        .am-tab-bar-bar{
+          height: 100%;
         }
       }
 
