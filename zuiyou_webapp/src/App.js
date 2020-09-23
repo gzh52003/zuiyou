@@ -1,12 +1,15 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Redirect, Switch} from "react-router-dom";
+
 import "./scss/App.scss";
 import "antd-mobile/dist/antd-mobile.css";
+
 const Footer = lazy(() => import("./Footer"));
 const Home = lazy(() => import("./views/Home"));
 const Found = lazy(() => import("./views/Found"));
 const News = lazy(() => import("./views/News"));
 const Mine = lazy(() => import("./views/Mine"));
+const Reg = lazy(() => import("./views/Reg"));
 
 function App() {
   return (
@@ -24,6 +27,7 @@ function App() {
             <Route path="/Found" component={Found}></Route>
             <Route path="/News" component={News}></Route>
             <Route path="/Mine" component={Mine}></Route>
+            <Route path="/Reg" component={Reg}></Route>
             <Redirect from="/" to="/home" exact></Redirect>
             <Route path="*" render={() => <div>404</div>}></Route>
           </Switch>

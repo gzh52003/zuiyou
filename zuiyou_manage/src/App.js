@@ -29,7 +29,7 @@ const Reg = lazy(() => import("./views/login/Reg"));
 const Invitation = lazy(() => import("./views/msg/Invitation"));
 const Comment = lazy(() => import("./views/msg/Comment"));
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content , Sider } = Layout;
 const { SubMenu } = Menu;
 class App extends React.PureComponent {
   state = {
@@ -137,10 +137,10 @@ class App extends React.PureComponent {
     if (pathname == ("/manage/Invitation" || "/manage/Comment")) {
       this.state.subcurrent = "sub1";
     } else if (
-      pathname == ("/manage/EditJurisdiction" || "/manage/AddJurisdiction")
+      pathname === ("/manage/EditJurisdiction" || "/manage/AddJurisdiction")
     ) {
       this.state.subcurrent = "sub2";
-    } else if (pathname == "/manage/edituser") {
+    } else if (pathname === "/manage/edituser") {
       this.state.subcurrent = "sub3";
     } else {
       this.state.subcurrent = "";
@@ -213,7 +213,7 @@ class App extends React.PureComponent {
                   >
                     {item.map((secitem, index) => {
                       // console.log("secitem", secitem, index);
-                      if (index != 0) {
+                      if (index !== 0) {
                         return (
                           <Menu.Item key={secitem.path} icon={secitem.icon}>
                             {secitem.text}
@@ -253,7 +253,7 @@ class App extends React.PureComponent {
               <Breadcrumb style={{ margin: "16px 0" }}>
                 <Breadcrumb.Item>manage</Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  {this.state.routelist[0] == "/manage"
+                  {this.state.routelist[0] === "/manage"
                     ? "home"
                     : this.state.routelist[0]}
                   {console.log("testtest", this.state.routelist[0])}

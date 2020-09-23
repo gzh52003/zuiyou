@@ -3,6 +3,10 @@ import { TabBar} from "antd-mobile";
 import {withRouter} from "react-router-dom"
 import "./App.scss";
 import "antd-mobile/dist/antd-mobile.css";
+import { createFromIconfontCN } from '@ant-design/icons';
+const MyIcon = createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_2085648_sb234wvlnf.js', // 在 iconfont.cn 上生成
+});
 function Footer(props) {
     const [selectedTab, changeSelectedTab] = useState("redTab");
     const [hidden, changeHidden] = useState(false);
@@ -12,28 +16,27 @@ function Footer(props) {
     const [MenuData, changeData] = useState([
       {
         title: "最右",
-        icon: "https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg",
-        selectedIcon:
-          "https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg",
+        icon: <MyIcon type="icon--zhangyu" style={{fontSize:"22",}}/>,
+        selectedIcon:<MyIcon type="icon--zhangyu" style={{fontSize:"22",color:"pink"}}/>,
         path:"/Home"
       },
       {
         title: "发现",
-        icon: "https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg",
+        icon: <MyIcon type="icon-faxian" />,
         selectedIcon:
           "https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg",
           path:"/Found"
       },
       {
         title: "消息",
-        icon: "https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg",
+        icon: <MyIcon type="icon-xiaoxi1" />,
         selectedIcon:
           "https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg",
           path:"/News"
       },
       {
         title: "我的",
-        icon: "https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg",
+        icon: <MyIcon type="icon-shouye" />,
         selectedIcon:
           "https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg",
           path:"/Mine"
@@ -54,19 +57,20 @@ function Footer(props) {
                 key={item.title}
                 icon={
                   <div
-                    style={{
-                      width: "22px",
-                      height: "22px",
-                      background: `url(${item.icon}) center center /  21px 21px no-repeat`,
-                    }}
-                  />
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                  }}>
+                    {item.icon}
+                    </div>
                 }
                 selectedIcon={
                   <div
                     style={{
                       width: "22px",
                       height: "22px",
-                      background: `url(${item.selectedIcon}) center center /  21px 21px no-repeat`,
+                      
+                      // background: `url(${item.selectedIcon}) center center /  21px 21px no-repeat`,
                     }}
                   />
                 }
