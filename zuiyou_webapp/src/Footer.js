@@ -1,11 +1,12 @@
-import React, { useState,useCallback,useEffect } from "react";
+import React, { useState,useCallback ,useContext } from "react";
 import { TabBar} from "antd-mobile";
 import {withRouter} from "react-router-dom"
+import {GlobalContext} from './store/index'
 import "./App.scss";
 import "antd-mobile/dist/antd-mobile.css";
 function Footer(props) {
+     const {dispatch} = useContext(GlobalContext);
     const [selectedTab, changeSelectedTab] = useState("redTab");
-    const [hidden, changeHidden] = useState(false);
     const changePath=useCallback((path) => {
         props.history.push(path)
       },[])
@@ -23,6 +24,12 @@ function Footer(props) {
         selectedIcon:
           "https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg",
           path:"/Found"
+      },
+      {
+        title: "",
+        icon: "https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg",
+        selectedIcon:
+          "https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg",
       },
       {
         title: "消息",
@@ -44,7 +51,6 @@ function Footer(props) {
         unselectedTintColor="#949494"
         tintColor="#33A3F4"
         barTintColor="white"
-        hidden={hidden}
         >
           {MenuData.map((item) => {
             return (
@@ -71,13 +77,12 @@ function Footer(props) {
                   />
                 }
                 selected={selectedTab === "blueTab"}
-                // badge={1}
-                onPress={changePath.bind(null,item.path)}
+                onPress={()=>{item.path?changePath(item.path):dispatch({type:"show"})}}
                 data-seed="logId"
               ></TabBar.Item>
             );
           })}
-  
+
         </TabBar>
     );
   }
