@@ -1,7 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Redirect, Switch} from "react-router-dom";
-import { Flex } from "antd-mobile";
-import "./App.scss";
+import "./scss/App.scss";
 import "antd-mobile/dist/antd-mobile.css";
 const Footer = lazy(() => import("./Footer"));
 const Home = lazy(() => import("./views/Home"));
