@@ -25,6 +25,10 @@ body,
 
   .am-tab-bar {
     flex: 1;
+    svg{
+      font-size: 22px;
+      z-index: 10;
+    }
     .am-tabs {
       display: flex;
       justify-content: center;
@@ -41,6 +45,7 @@ body,
         }
         .am-tab-bar-bar{
           height: 100%;
+          border-top: #eeeeee 1px solid;
         }
       }
 
