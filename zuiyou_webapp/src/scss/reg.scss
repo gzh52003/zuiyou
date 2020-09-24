@@ -1,0 +1,41 @@
+.reg{
+  padding: 120px 38px;
+  .am-input-item{
+    border-radius: 22px;
+    margin-bottom: 3%;
+    background-color: #f5f5f5;
+    .am-input-label{
+      font-size: 14px;
+    }
+    input{
+      font-size: 14px;
+    }
+  }
+  p{
+    span{
+      color: #409eff;
+      font-size: 14px;
+      &:nth-last-of-type(1){
+        float: right;
+      }
+    }
+  }
+}
+.botton{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 18px;
+  justify-content: space-evenly;
+  .Icon{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    span{
+      color:white;
+      line-height: 34px;
+      font-size: 16px;
+      margin: 0 7px;
+    }
+  }
+}

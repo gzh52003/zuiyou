@@ -9,10 +9,10 @@ import { createFromIconfontCN } from '@ant-design/icons';
 const MyIcon = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_2085648_xnxr2z1tpg.js', 
 });
-let isSel = ""
+
 function Footer(props) {
   const { dispatch } = useContext(GlobalContext);
-  const [selectedTab, changeSelectedTab] = useState("redTab");
+  const [selectedTab, changeSelectedTab] = useState("/Home");
   const changePath = useCallback((path) => {
     props.history.push(path)
   }, [])
@@ -32,7 +32,7 @@ function Footer(props) {
     {
       title: "",
       icon: <div style={{ width: 30, height: 30, lineHeight: '36px', borderRadius: '50%', background: '#1296db' }}><MyIcon type="icon-jia" /></div>,
-      selectedIcon: <MyIcon type="icon-shouye-copy" />,
+      selectedIcon: <div style={{ width: 30, height: 30, lineHeight: '36px', borderRadius: '50%', background: '#1296db' }}><MyIcon type="icon-jia" /></div>,
     },
     {
       title: "消息",
@@ -56,8 +56,6 @@ function Footer(props) {
       {MenuData.map((item) => {
         return (
           <TabBar.Item
-          // selected={isSel === item.title}
-          // onPress={() =>{isSel=item.title}}
             className="menu-icon"
             title={item.title}
             key={item.title}
@@ -79,8 +77,11 @@ function Footer(props) {
                 {item.selectedIcon}
               </div>
             }
-            selected={selectedTab === "blueTab"}
-            onPress={() => { item.path ? changePath(item.path) : dispatch({ type: "show" }) }}
+            selected={selectedTab === item.path}
+            onPress={() => { 
+              changeSelectedTab(item.path)
+              item.path ? changePath(item.path) : dispatch({ type: "show" }) 
+            }}
             data-seed="logId"
           ></TabBar.Item>
         );
