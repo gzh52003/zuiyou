@@ -14,6 +14,7 @@ import {
 } from "@ant-design/icons";
 
 import "./App.scss";
+import { get } from "./utils/request";
 
 const Home = lazy(() => import("./views/home/Home"));
 const Login = lazy(() => import("./views/login/Login"));
@@ -29,10 +30,11 @@ const Reg = lazy(() => import("./views/login/Reg"));
 const Invitation = lazy(() => import("./views/msg/Invitation"));
 const Comment = lazy(() => import("./views/msg/Comment"));
 
-const { Header, Content , Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 class App extends React.PureComponent {
   state = {
+    type: "",
     collapsed: false,
     // 一级菜单
     menu: [
@@ -112,6 +114,13 @@ class App extends React.PureComponent {
     // console.log("gotopage", this);
     this.go(key);
   };
+  jumpreg = () => {
+    this.props.history.push("/reg");
+  };
+  jumplogin = () => {
+    window.localStorage.clear();
+    this.props.history.push("/login");
+  };
   go = (path) => {
     // console.log(this);
     this.props.history.push(path);
@@ -124,7 +133,7 @@ class App extends React.PureComponent {
     this.setState({ collapsed });
     // this.go(key);
   };
-  componentWillMount() {
+  async componentWillMount() {
     // console.log("componetWillMount", this.props.location.pathname);
 
     let { pathname } = this.props.location;
@@ -147,13 +156,28 @@ class App extends React.PureComponent {
     }
     this.state.routelist.push(pathname.replace(/\/[a-zA-Z]+\//, ""));
     console.log("this.state.subcurrent", this.state.subcurrent);
+    let authorization = window.localStorage.getItem("authorization");
+    let manageType = window.localStorage.getItem("manageType");
+    let manageName = window.localStorage.getItem("manageName");
+    if (authorization && manageType && manageName) {
+      const result = await get("/managelogin/angincheck", {
+        manageName,
+        manageType,
+        authorization,
+      }).then((res) => res);
+      // console.log(result);
+      this.setState({
+        type: result.code,
+      });
+    }
   }
   componentDidMount() {
     this.render();
   }
   render() {
     // console.log("第一次", this.state.current);
-    let { menu, secmenu } = this.state;
+    let { menu, secmenu, type } = this.state;
+
     return (
       <>
         <Header className="Header_h1">
@@ -169,6 +193,7 @@ class App extends React.PureComponent {
               />
               <div style={{ paddingRight: "8px" }}></div>
               <span
+                onClick={() => this.jumplogin()}
                 style={{
                   color: "#1890ff",
                   fontSize: "18px",
@@ -177,6 +202,21 @@ class App extends React.PureComponent {
               >
                 退出
               </span>
+              <div style={{ paddingRight: "8px" }}></div>
+              {type == "2000" ? (
+                <span
+                  onClick={() => this.jumpreg()}
+                  style={{
+                    color: "#1890ff",
+                    fontSize: "18px",
+                    cursor: "pointer",
+                  }}
+                >
+                  注册
+                </span>
+              ) : (
+                ""
+              )}
             </div>
           </>
         </Header>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, Select } from "antd";
 import { UserOutlined, LockOutlined, SafetyOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import { post, get } from "../../utils/request";
@@ -9,19 +9,30 @@ import userAction, { login } from "../../store/actions/user";
 import { bindActionCreators } from "redux";
 import "../scss/login.scss";
 
+const { Option } = Select;
 export default class Login extends React.Component {
   state = {
     vcode: "",
   };
   handleSubmit = async (value, e) => {
     // this.props.history.push({ pathname: "/app" });
-    const { username, password, code } = { ...value };
-
-    if (username && password && code) {
-      const result = await post("/reg")
-        .then((res) => JSON.stringify(res))
-        .catch("错误");
-      console.log(result);
+    const { username, password, code, select } = { ...value };
+    // console.log({ ...value });
+    if (username && password && select && code) {
+      const checktest = await get("/reg/check", {
+        manageName: value.username,
+      }).then((res) => res);
+      console.log(checktest, "checktest");
+      if (checktest.code == 1) {
+        const result = await post("/reg", { ...value, vcode: code }).then(
+          (res) => res
+        );
+        // this.props.history.push("/manage");
+      } else {
+        alert("用户存在或验证码错误");
+        this.getVcode();
+      }
+      // if(result.data)
     }
   };
   // Markup = () => {
@@ -32,20 +43,20 @@ export default class Login extends React.Component {
     console.log("changedValues", changedValues);
     // console.log("allValues", allValues);
   };
-  onFinish = (values) => {
-    // console.log("Received values of form: ", values);
-    this.handleSubmit(values);
+  onFinish = (value) => {
+    console.log("Received values of form: ", value);
+
+    this.handleSubmit(value);
   };
   getVcode = async () => {
     const vcode = await get("/vcode").then((res) => res.data);
-    console.log(vcode);
+    // console.log(vcode);
     // react只能通过setState修改state的值
     this.setState({
       vcode: vcode,
     });
-    console.log(this.state.vcode);
+    // console.log(this.state.vcode);
     window.localStorage.setItem("vcode", vcode);
-    this.render();
     return vcode;
   };
   async componentWillMount() {
@@ -86,6 +97,17 @@ export default class Login extends React.Component {
               type="password"
               placeholder="Password"
             />
+          </Form.Item>
+          <Form.Item
+            name="select"
+            // label="Select"
+            hasFeedback
+            rules={[{ required: true, message: "请选择权限!" }]}
+          >
+            <Select placeholder="请选择权限">
+              <Option value="admin">管理员</Option>
+              <Option value="vip">审评员</Option>
+            </Select>
           </Form.Item>
           <Form.Item
             name="code"
