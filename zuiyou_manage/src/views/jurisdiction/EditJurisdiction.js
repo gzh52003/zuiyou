@@ -1,55 +1,79 @@
 import React from "react";
-import { Table, Input, Button, Space ,Select,Tag} from 'antd'
-import Highlighter from 'react-highlight-words';
-import { SearchOutlined } from '@ant-design/icons';
-const {Option} = Select;
+import { Table, Input, Button, Space, Select, Tag } from "antd";
+import Highlighter from "react-highlight-words";
+import { SearchOutlined } from "@ant-design/icons";
+import checklocation from "../../utils/common";
+import { connect } from "react-redux";
+const { Option } = Select;
 
-document.title = "权限管理"
+document.title = "权限管理";
 const data = [
   {
-    key: '1',
-    name: 'John Brown',
+    key: "1",
+    name: "John Brown",
     num: 32,
-    address: 'New York No. 1 Lake Park',
+    address: "New York No. 1 Lake Park",
   },
   {
-    key: '2',
-    name: 'Joe Black',
+    key: "2",
+    name: "Joe Black",
     num: 42,
-    address: 'London No. 1 Lake Park',
+    address: "London No. 1 Lake Park",
   },
   {
-    key: '3',
-    name: 'Jim Green',
+    key: "3",
+    name: "Jim Green",
     num: 32,
-    address: 'Sidney No. 1 Lake Park',
+    address: "Sidney No. 1 Lake Park",
   },
   {
-    key: '4',
-    name: 'Jim Red',
+    key: "4",
+    name: "Jim Red",
     num: 32,
-    address: 'London No. 2 Lake Park',
+    address: "London No. 2 Lake Park",
   },
 ];
-
+@connect((state) => ({ manage: state.managetype }))
 class JuTable extends React.Component {
   state = {
-    searchText: '',
-    searchedColumn: '',
+    searchText: "",
+    searchedColumn: "",
   };
-
-  getColumnSearchProps = dataIndex => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+  // async componentWillMount() {
+  //   let code = await checklocation(this.props.history);
+  //   console.log("this.props", this.props);
+  //   console.log("local", window.localStorage.getItem("code"));
+  //   console.log("code", code);
+  //   if (
+  //     window.localStorage.getItem("code") &&
+  //     window.localStorage.getItem("code") == code
+  //   ) {
+  //     console.log("scss");
+  //   } else {
+  //     this.props.history.push("/login");
+  //   }
+  // }
+  getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
       <div style={{ padding: 8 }}>
         <Input
-          ref={node => {
+          ref={(node) => {
             this.searchInput = node;
           }}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{ width: 188, marginBottom: 8, display: 'block' }}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            this.handleSearch(selectedKeys, confirm, dataIndex)
+          }
+          style={{ width: 188, marginBottom: 8, display: "block" }}
         />
         <Space>
           <Button
@@ -61,33 +85,42 @@ class JuTable extends React.Component {
           >
             Search
           </Button>
-          <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+          <Button
+            onClick={() => this.handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
             Reset
           </Button>
         </Space>
       </div>
     ),
-    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+    filterIcon: (filtered) => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
     onFilter: (value, record) =>
       record[dataIndex]
-        ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
-        : '',
-    onFilterDropdownVisibleChange: visible => {
+        ? record[dataIndex]
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        : "",
+    onFilterDropdownVisibleChange: (visible) => {
       if (visible) {
         setTimeout(() => this.searchInput.select(), 100);
       }
     },
-    render: text =>
+    render: (text) =>
       this.state.searchedColumn === dataIndex ? (
         <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
           searchWords={[this.state.searchText]}
           autoEscape
-          textToHighlight={text ? text.toString() : ''}
+          textToHighlight={text ? text.toString() : ""}
         />
       ) : (
-          text
-        ),
+        text
+      ),
   });
 
   handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -98,40 +131,40 @@ class JuTable extends React.Component {
     });
   };
 
-  handleReset = clearFilters => {
+  handleReset = (clearFilters) => {
     clearFilters();
-    this.setState({ searchText: '' });
+    this.setState({ searchText: "" });
   };
 
   render() {
     const columns = [
       {
-        title: '帐号',
-        dataIndex: 'name',
-        key: 'name',
-        width: '20%',
-        ...this.getColumnSearchProps('name'),
+        title: "帐号",
+        dataIndex: "name",
+        key: "name",
+        width: "20%",
+        ...this.getColumnSearchProps("name"),
       },
       {
-        title: '加入时间',
-        dataIndex: 'num',
-        key: 'num',
-        width: '20%',
-        ...this.getColumnSearchProps('age'),
+        title: "加入时间",
+        dataIndex: "num",
+        key: "num",
+        width: "20%",
+        ...this.getColumnSearchProps("age"),
       },
       {
-        title: '评审贡献',
-        dataIndex: 'num',
-        key: 'num',
-        width: '20%',
-        ...this.getColumnSearchProps('age'),
+        title: "评审贡献",
+        dataIndex: "num",
+        key: "num",
+        width: "20%",
+        ...this.getColumnSearchProps("age"),
       },
       {
-        title: '帐号权限',
-        dataIndex: 'address',
-        key: 'address',
-        width: '20%',
-        render:()=>(
+        title: "帐号权限",
+        dataIndex: "address",
+        key: "address",
+        width: "20%",
+        render: () => (
           <>
             <Tag color="gold">管理者</Tag>
             <Tag color="blue">审评员</Tag>
@@ -141,15 +174,17 @@ class JuTable extends React.Component {
         // ...this.getColumnSearchProps('address'),
       },
       {
-        title: '操作',
-        key: 'action',
+        title: "操作",
+        key: "action",
         render: () => (
           <Space size="middle">
             <Select defaultValue="spy" style={{ width: 90 }} bordered={false}>
               <Option value="spy">审评员</Option>
               <Option value="glz">管理者</Option>
             </Select>
-            <Button size='small' danger>禁用</Button>
+            <Button size="small" danger>
+              禁用
+            </Button>
           </Space>
         ),
       },

@@ -12,10 +12,10 @@ import {
   EditOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
-
+import { connect } from "react-redux";
 import "./App.scss";
 import { get } from "./utils/request";
-
+import checklocation from "./utils/common";
 const Home = lazy(() => import("./views/home/Home"));
 const Login = lazy(() => import("./views/login/Login"));
 const EditJurisdiction = lazy(() =>
@@ -32,6 +32,7 @@ const Comment = lazy(() => import("./views/msg/Comment"));
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
+@connect((state) => ({ manage: state.managetype }))
 class App extends React.PureComponent {
   state = {
     type: "",
@@ -135,7 +136,7 @@ class App extends React.PureComponent {
   };
   async componentWillMount() {
     // console.log("componetWillMount", this.props.location.pathname);
-
+    console.log("我是conponnectwill", this.props);
     let { pathname } = this.props.location;
     if (!this.state.current && this.props.location.pathname == "/manage") {
       this.setState({
@@ -143,10 +144,11 @@ class App extends React.PureComponent {
       });
     }
     this.state.current = pathname;
-    if (pathname == ("/manage/Invitation" || "/manage/Comment")) {
+    if (pathname == "/manage/Invitation" || pathname == "/manage/Comment") {
       this.state.subcurrent = "sub1";
     } else if (
-      pathname === ("/manage/EditJurisdiction" || "/manage/AddJurisdiction")
+      pathname === "/manage/EditJurisdiction" ||
+      pathname == "/manage/AddJurisdiction"
     ) {
       this.state.subcurrent = "sub2";
     } else if (pathname === "/manage/edituser") {
@@ -156,24 +158,42 @@ class App extends React.PureComponent {
     }
     this.state.routelist.push(pathname.replace(/\/[a-zA-Z]+\//, ""));
     console.log("this.state.subcurrent", this.state.subcurrent);
-    let authorization = window.localStorage.getItem("authorization");
-    let manageType = window.localStorage.getItem("manageType");
-    let manageName = window.localStorage.getItem("manageName");
-    if (authorization && manageType && manageName) {
-      const result = await get("/managelogin/angincheck", {
-        manageName,
-        manageType,
-        authorization,
-      }).then((res) => res);
-      // console.log(result);
-      this.setState({
-        type: result.code,
-      });
+    let code = await checklocation(this.props.history);
+    console.log("this.props", this.props);
+    console.log("local", window.localStorage.getItem("code"));
+    console.log("code", code);
+    if (window.localStorage.getItem("code") == code) {
+      console.log("scss");
+    } else {
+      this.props.history.push("/login");
     }
+    // if (code == window.localStorage.getItem("code")) {
+    //   console.log("我是成功的");
+    // } else {
+    //   this.props.history.push("/login");
+    // }
+    // let authorization = window.localStorage.getItem("authorization");
+    // let manageType = window.localStorage.getItem("manageType");
+    // let manageName = window.localStorage.getItem("manageName");
+    // if (authorization && manageType && manageName) {
+    //   const result = await get("/managelogin/angincheck", {
+    //     manageName,
+    //     manageType,
+    //     authorization,
+    //   }).then((res) => res);
+    //   // console.log(result);
+    //   console.log(result);
+    //   if (manageName) {
+    //   }
+    //   if (result.code == 2000) {
+    //     console.log(this.props);
+    //   } else {
+    //     this.props.history.push("/login");
+    //     window.localStorage.clear();
+    //   }
+    // }
   }
-  componentDidMount() {
-    this.render();
-  }
+
   render() {
     // console.log("第一次", this.state.current);
     let { menu, secmenu, type } = this.state;
@@ -203,7 +223,7 @@ class App extends React.PureComponent {
                 退出
               </span>
               <div style={{ paddingRight: "8px" }}></div>
-              {type == "2000" ? (
+              {window.localStorage.getItem("code") == "2000" ? (
                 <span
                   onClick={() => this.jumpreg()}
                   style={{

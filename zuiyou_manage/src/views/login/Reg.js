@@ -3,6 +3,7 @@ import { Form, Input, Button, Checkbox, Select } from "antd";
 import { UserOutlined, LockOutlined, SafetyOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import { post, get } from "../../utils/request";
+import checklocation from "../../utils/common";
 // 调用action中的方法
 import userAction, { login } from "../../store/actions/user";
 // 用于合并action
@@ -10,7 +11,8 @@ import { bindActionCreators } from "redux";
 import "../scss/login.scss";
 
 const { Option } = Select;
-export default class Login extends React.Component {
+@connect((state) => ({ manage: state.managetype }))
+class Reg extends React.Component {
   state = {
     vcode: "",
   };
@@ -62,6 +64,13 @@ export default class Login extends React.Component {
   async componentWillMount() {
     const result = await this.getVcode();
     window.localStorage.setItem("vcode", result);
+    let code = await checklocation(this.props.history);
+    console.log(this.props);
+    if (code == this.props.manage.code) {
+      console.log("我是成功的");
+    } else {
+      this.props.history.push("/login");
+    }
   }
 
   render() {
@@ -144,7 +153,7 @@ export default class Login extends React.Component {
     );
   }
 }
-
+export default Reg;
 //使用高阶组件  react-redux里面有两个很重要的组件，Provider和connect
 
 // // const mapStateToProps = ({currentUser})=>({currentUser}) 相当于
