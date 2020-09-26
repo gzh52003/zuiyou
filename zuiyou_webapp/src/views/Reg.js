@@ -4,10 +4,22 @@ import { WechatOutlined, QqOutlined, WeiboOutlined } from '@ant-design/icons'
 import { createForm } from 'rc-form'
 import "../scss/reg.scss"
 class Reg extends React.Component {
+  state={
+    phoneNum:'',
+    password:''
+  }
+  goReg=()=>{
+    console.log(this.state.password);
+  }
+  psdChange=()=>{
+
+    // console.log(this.inptxt.value);
+    this.setState({password:this.inptxt.value})
+  }
   render() {
     const { getFieldProps } = this.props.form;
     return (
-      <>
+      <div className="regBlock">
         <div className="reg"><InputItem
           {...getFieldProps('phone')}
           type="phone"
@@ -16,24 +28,27 @@ class Reg extends React.Component {
           <InputItem
             {...getFieldProps('password')}
             type="password"
+            value={this.state.password}
+            ref={(inp)=>{this.inptxt = inp}}
+            onChange={this.psdChange}
             placeholder="请输入验证码"
           ></InputItem>
-          <Button type="primary" style={{ borderRadius: 22, marginTop: 16, fontSize: 14 }}>登陆</Button>
+          <Button type="primary" onClick={this.goReg} style={{ borderRadius: 22, marginTop: 16, fontSize: 14 }}>注册</Button>
           <p><span>密码登陆</span><span>无法登陆？</span></p>
         </div>
         <p style={{ width: "100%",marginTop:80, textAlign: "center", color: "#aaa", fontSize: 12 }}>—— 其他方式登陆 ——</p>
-        <div class='botton'>
-          <div class='Icon' style={{ background: "green" }}>
+        <div className='botton'>
+          <div className='Icon' style={{ background: "#00CD66" }}>
             <WechatOutlined />
           </div>
-          <div class='Icon' style={{ background: "blue" }}>
+          <div className='Icon' style={{ background: "#00C5CD" }}>
             <QqOutlined />
           </div>
-          <div class='Icon' style={{ background: "red" }}>
+          <div className='Icon' style={{ background: "#FF3030" }}>
             <WeiboOutlined />
           </div>
         </div>
-      </>
+      </div>
     )
   }
 }

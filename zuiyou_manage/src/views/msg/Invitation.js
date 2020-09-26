@@ -8,7 +8,21 @@ import React, {
 import QueueAnim from "rc-queue-anim";
 import { Table, Tag, Input } from "antd";
 import "../scss/msg.scss";
+import checklocation from "../../utils/common";
+import { useHistory } from "react-router-dom";
 export default function Invitation() {
+  let history = useHistory();
+  useEffect(() => {
+    async function fetchData() {
+      let code = await checklocation(history);
+      // ...
+      if (code != window.localStorage.getItem("code")) {
+        history.push("/login");
+        window.localStorage.clear();
+      }
+    }
+    fetchData();
+  });
   const initdata = [];
   for (let i = 0; i < 10; i++) {
     initdata.push({
@@ -90,7 +104,7 @@ export default function Invitation() {
         }}
         dataSource={data}
         pagination={{ pageSize: 100 }}
-        scroll={{ y:'56vh'}}
+        scroll={{ y: "56vh" }}
       />
     </QueueAnim>
   );
