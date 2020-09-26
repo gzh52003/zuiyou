@@ -145,6 +145,16 @@ class Reg extends React.Component {
             <Form.Item>
               <Button
                 type="primary"
+                className="login-form-button"
+                onClick={() => {
+                  this.props.history.push("/manage");
+                }}
+              >
+                取消
+              </Button>
+              <div style={{ width: 80 }}></div>
+              <Button
+                type="primary"
                 htmlType="submit"
                 className="login-form-button"
                 onClick={this.handleSubmit}
