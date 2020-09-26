@@ -63,15 +63,24 @@ router.get("/angincheck", async (req, res) => {
   let { manageType, manageName, authorization } = req.query;
   console.log(manageType, manageName, authorization);
   let result = token.verify(authorization);
+  let resultmanageuser;
+  try {
+    resultmanageuser = await mongo.find("adminInfo", {
+      manageName,
+    });
+  } catch (error) {
+    res.send("死鬼，服务器错了！！");
+  }
   if (!result) {
     res.send(formatData({ code: 0 }));
   }
-  if ((manageType = md5("admin"))) {
+  console.log(md5(resultmanageuser[0].manageType));
+  console.log(manageType);
+  if (manageType == md5(resultmanageuser[0].manageType)) {
     res.send(formatData({ code: 2000 }));
-  } else if ((manageType = md5("vip"))) {
+  } else {
     res.send(formatData({ code: 3000 }));
   }
-
   console.log(resultmanageuser);
 });
 module.exports = router;

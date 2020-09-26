@@ -11,18 +11,18 @@ import "../scss/msg.scss";
 import checklocation from "../../utils/common";
 import { useHistory } from "react-router-dom";
 export default function Invitation() {
-  // let history = useHistory();
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     let code = await checklocation(history);
-  //     // ...
-  //     if (code !== window.localStorage.getItem("code")) {
-  //       history.push("/login");
-  //       window.localStorage.clear();
-  //     }
-  //   }
-  //   fetchData();
-  // });
+  let history = useHistory();
+  useEffect(() => {
+    async function fetchData() {
+      let code = await checklocation(history);
+      // ...
+      if (code != window.localStorage.getItem("code")) {
+        history.push("/login");
+        window.localStorage.clear();
+      }
+    }
+    fetchData();
+  });
   const initdata = [];
   for (let i = 0; i < 10; i++) {
     initdata.push({

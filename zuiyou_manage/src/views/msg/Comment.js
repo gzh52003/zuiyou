@@ -9,21 +9,23 @@ import QueueAnim from "rc-queue-anim";
 import { Table, Input } from "antd";
 import "../scss/msg.scss";
 import checklocation from "../../utils/common";
-import { useHistory } from "react-router-dom";
-export default function Invitation() {
-  // let history = useHistory();
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     let code = await checklocation(history);
-  //     // ...
-  //     console.log("code", code);
-  //     if (code !== window.localStorage.getItem("code")) {
-  //       history.push("/login");
-  //       window.localStorage.clear();
-  //     }
-  //   }
-  //   fetchData();
-  // });
+import { useHistory, withRouter } from "react-router-dom";
+// 如果函数组件需要用withrouter的方法，就想类组件一样：函数名=withRouter(函数名)
+function Invitation(props) {
+  console.log("我是comment的props", props);
+  let history = useHistory();
+  useEffect(() => {
+    async function fetchData() {
+      let code = await checklocation(history);
+      // ...
+      console.log("code", code);
+      if (code != window.localStorage.getItem("code")) {
+        history.push("/login");
+        window.localStorage.clear();
+      }
+    }
+    fetchData();
+  });
   const initdata = [];
   for (let i = 0; i < 10; i++) {
     initdata.push({
@@ -100,3 +102,5 @@ export default function Invitation() {
     </QueueAnim>
   );
 }
+Invitation = withRouter(Invitation);
+export default Invitation;

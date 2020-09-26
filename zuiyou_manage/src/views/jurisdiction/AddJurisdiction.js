@@ -16,19 +16,19 @@ import { useHistory } from "react-router-dom";
 document.title = "申请权限";
 const FormSizeDemo = () => {
   const [componentSize, setComponentSize] = useState("default");
-  // let history = useHistory();
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // You can await here
-  //     let code = await checklocation(history);
-  //     // ...
-  //     if (code !== window.localStorage.getItem("code")) {
-  //       history.push("/login");
-  //       window.localStorage.clear();
-  //     }
-  //   }
-  //   fetchData();
-  // });
+  let history = useHistory();
+  useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      let code = await checklocation(history);
+      // ...
+      if (code != window.localStorage.getItem("code")) {
+        history.push("/login");
+        window.localStorage.clear();
+      }
+    }
+    fetchData();
+  });
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
   };

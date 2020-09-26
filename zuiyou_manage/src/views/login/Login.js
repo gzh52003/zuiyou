@@ -18,11 +18,11 @@ class Login extends React.Component {
     // this.props.history.push({ pathname: "/app" });
     console.log(this.props);
     const result = await post("/managelogin", {
-      username: value.username,
-      password: value.password,
+      // username: value.username,
+      // password: value.password,
       remember: JSON.stringify(value.remember),
       vcode: value.code,
-      //...value,
+      ...value,
     }).then(
       (res) => res
       // () => {

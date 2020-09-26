@@ -19,8 +19,8 @@ export default async function checklocation(props) {
       console.log("你他妈的进来了码");
       return result.code;
     } else {
-      push("/login");
       window.localStorage.clear();
+      push("/login");
     }
   } else {
     push("/login");

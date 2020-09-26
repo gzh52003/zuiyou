@@ -142,18 +142,19 @@ const data = [
   },
 ];
 export default function EditUser() {
-  // let history = useHistory();
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     let code = await checklocation(history);
-  //     // ...
-  //     if (code !== window.localStorage.getItem("code")) {
-  //       history.push("/login");
-  //       window.localStorage.clear();
-  //     }
-  //   }
-  //   fetchData();
-  // });
+  let history = useHistory();
+  useEffect(() => {
+    async function fetchData() {
+      let code = await checklocation(history);
+      // ...
+      console.log("code", code);
+      if (code != localStorage.getItem("code")) {
+        history.push("/login");
+        localStorage.clear();
+      }
+    }
+    fetchData();
+  });
   return (
     <>
       <Search

@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import "./App.scss";
 import { get } from "./utils/request";
 import checklocation from "./utils/common";
+
 const Home = lazy(() => import("./views/home/Home"));
 const Login = lazy(() => import("./views/login/Login"));
 const EditJurisdiction = lazy(() =>
@@ -37,6 +38,7 @@ class App extends React.PureComponent {
   state = {
     type: "",
     collapsed: false,
+
     // 一级菜单
     menu: [
       {
@@ -136,7 +138,7 @@ class App extends React.PureComponent {
   };
   async componentWillMount() {
     // console.log("componetWillMount", this.props.location.pathname);
-    console.log("我是conponnectwill", this.props);
+
     let { pathname } = this.props.location;
     if (!this.state.current && this.props.location.pathname == "/manage") {
       this.setState({
@@ -167,6 +169,7 @@ class App extends React.PureComponent {
     } else {
       this.props.history.push("/login");
     }
+
     // if (code == window.localStorage.getItem("code")) {
     //   console.log("我是成功的");
     // } else {
@@ -193,7 +196,9 @@ class App extends React.PureComponent {
     //   }
     // }
   }
-
+  shouldComponentUpdate() {
+    console.log("我哼");
+  }
   render() {
     // console.log("第一次", this.state.current);
     let { menu, secmenu, type } = this.state;
@@ -223,7 +228,8 @@ class App extends React.PureComponent {
                 退出
               </span>
               <div style={{ paddingRight: "8px" }}></div>
-              {window.localStorage.getItem("code") == "2000" ? (
+              {window.localStorage.getItem("manageType") !==
+              "b262f6241493f2e570c762e214066820" ? (
                 <span
                   onClick={() => this.jumpreg()}
                   style={{
@@ -272,13 +278,22 @@ class App extends React.PureComponent {
                     title={item[0].title}
                   >
                     {item.map((secitem, index) => {
-                      // console.log("secitem", secitem, index);
+                      console.log("1", secitem, index);
                       if (index !== 0) {
-                        return (
-                          <Menu.Item key={secitem.path} icon={secitem.icon}>
-                            {secitem.text}
-                          </Menu.Item>
-                        );
+                        if (
+                          localStorage.getItem("manageType") ==
+                            "b262f6241493f2e570c762e214066820" &&
+                          idx == 1 &&
+                          index == 1
+                        ) {
+                          return "";
+                        } else {
+                          return (
+                            <Menu.Item key={secitem.path} icon={secitem.icon}>
+                              {secitem.text}
+                            </Menu.Item>
+                          );
+                        }
                       }
                     })}
                   </SubMenu>
@@ -339,10 +354,16 @@ class App extends React.PureComponent {
                       component={Invitation}
                     ></Route>
                     <Route path="/manage/Comment" component={Comment}></Route>
-                    <Route
-                      path="/manage/EditJurisdiction"
-                      component={EditJurisdiction}
-                    ></Route>
+                    {window.localStorage.getItem("manageType") !==
+                    "b262f6241493f2e570c762e214066820" ? (
+                      <Route
+                        path="/manage/EditJurisdiction"
+                        component={EditJurisdiction}
+                      ></Route>
+                    ) : (
+                      ""
+                    )}
+
                     <Route
                       path="/manage/AddJurisdiction"
                       component={AddJurisdiction}

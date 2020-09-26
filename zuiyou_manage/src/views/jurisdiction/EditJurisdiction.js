@@ -4,6 +4,7 @@ import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import checklocation from "../../utils/common";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 const { Option } = Select;
 
 document.title = "权限管理";
@@ -39,20 +40,21 @@ class JuTable extends React.Component {
     searchText: "",
     searchedColumn: "",
   };
-  // async componentWillMount() {
-  //   let code = await checklocation(this.props.history);
-  //   console.log("this.props", this.props);
-  //   console.log("local", window.localStorage.getItem("code"));
-  //   console.log("code", code);
-  //   if (
-  //     window.localStorage.getItem("code") &&
-  //     window.localStorage.getItem("code") == code
-  //   ) {
-  //     console.log("scss");
-  //   } else {
-  //     this.props.history.push("/login");
-  //   }
-  // }
+  async componentWillMount() {
+    console.log(this.props);
+    let code = await checklocation(this.props.history);
+    console.log("this.props", this.props);
+    console.log("local", window.localStorage.getItem("code"));
+    console.log("code", code);
+    if (
+      window.localStorage.getItem("code") &&
+      window.localStorage.getItem("code") == code
+    ) {
+      console.log("scss");
+    } else {
+      this.props.history.push("/login");
+    }
+  }
   getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -137,6 +139,7 @@ class JuTable extends React.Component {
   };
 
   render() {
+    console.log("render");
     const columns = [
       {
         title: "帐号",
@@ -192,6 +195,7 @@ class JuTable extends React.Component {
     return <Table columns={columns} dataSource={data} />;
   }
 }
+JuTable = withRouter(JuTable);
 export default function EditJurisdiction() {
   return <JuTable />;
 }

@@ -29,7 +29,7 @@ class Reg extends React.Component {
         const result = await post("/reg", { ...value, vcode: code }).then(
           (res) => res
         );
-        // this.props.history.push("/manage");
+        this.props.history.push("/manage");
       } else {
         alert("用户存在或验证码错误");
         this.getVcode();
@@ -70,6 +70,11 @@ class Reg extends React.Component {
       console.log("我是成功的");
     } else {
       this.props.history.push("/login");
+    }
+    if (
+      localStorage.getItem("manageType") == "b262f6241493f2e570c762e214066820"
+    ) {
+      this.props.history.push("/manage");
     }
   }
 
