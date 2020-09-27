@@ -8,11 +8,13 @@ class Reg extends React.Component {
     phoneNum: '',
     password: '',
     isGetNum: false,
-    num: 60
+    num: 60,
+    r1: false,
+    r2: false
   }
   // 走短信验证码倒计时
   numRun = () => {
-    if (!this.state.isGetNum) {
+    if ((!this.state.isGetNum) && this.state.phoneNum.length == 11) {
       Toast.info('验证码已发送', 2, null, false);
       this.setState({ isGetNum: true });
       let time = setInterval(() => {
@@ -25,7 +27,7 @@ class Reg extends React.Component {
     }
   }
   goReg = () => {
-    console.log(this.state.phoneNum,this.state.password);
+    console.log(this.state.phoneNum, this.state.password);
   }
 
   render() {
@@ -40,13 +42,23 @@ class Reg extends React.Component {
             {...getFieldProps('phone')}
             type="phone"
             clear
-            onBlur={(e) => {console.log(e,e.trim());;this.setState({phoneNum:e.trim()})}}
+            onBlur={async (e) => {
+              await this.setState({ phoneNum: e.replace(/ +/g,'') });
+              console.log(this.state.phoneNum);
+              this.state.phoneNum.length == 11 ? this.setState({ r1: true }) : this.setState({ r1: false })
+            }}
             placeholder="请输入手机号"
           >+86 <Icon type="down" size='xxs' /></InputItem>
           <InputItem
+            style={{ textIndent: 16 }}
+            maxLength={6}
+            clear
             {...getFieldProps('password')}
             type="text"
-            onBlur={(e) => {this.setState({password:e})}}
+            onBlur={async (e) => {
+              await this.setState({ password: e });
+              this.state.password.length == 6 ? this.setState({ r2: true }) : this.setState({ r2: false })
+            }}
             placeholder="请输入验证码"
             extra={<span style={{ fontSize: 12, height: 21, width: 80 }}
               onClick={() => { this.numRun() }}>
@@ -55,7 +67,7 @@ class Reg extends React.Component {
                 <span style={{ width: 60, display: 'inline-block', textAlign: "center", color: '#1E90FF' }}>{this.state.num}</span>
                 : '获取验证码'}</span>}
           ></InputItem>
-          <Button type="primary" onClick={this.goReg} style={{ borderRadius: 22, marginTop: 16, fontSize: 14 }}>登陆</Button>
+          <Button type="primary" disabled={this.state.r1 && this.state.r2 ? false : true} onClick={this.goReg} style={{ borderRadius: 22, marginTop: 16, fontSize: 14 }}>登陆</Button>
           <p><span>密码登陆</span><span>无法登陆？</span></p>
         </div>
         <p style={{ width: "100%", marginTop: 80, textAlign: "center", color: "#aaa", fontSize: 10 }}>—— 其他方式登陆 ——</p>
