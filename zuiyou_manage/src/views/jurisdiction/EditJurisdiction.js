@@ -5,7 +5,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import checklocation from "../../utils/common";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { get, post, put } from "../../utils/request";
+import { get, post, put, remove } from "../../utils/request";
 const { Option } = Select;
 
 document.title = "权限管理";
@@ -184,7 +184,7 @@ class JuTable extends React.Component {
     clearFilters();
     this.setState({ searchText: "" });
   };
-
+  // 禁用管理用户
   changeisStop = async (_id, isStop, manageName) => {
     console.log("改变状态为禁用true", _id);
     if (manageName == "marlen") {
@@ -207,6 +207,7 @@ class JuTable extends React.Component {
       }
     });
   };
+  // 更改管理用户类型
   changeManageType = async (value, _id, manageName) => {
     // console.log("value, _id, manageType", value, _id, manageType);
     if (manageName == "marlen") {
@@ -227,6 +228,22 @@ class JuTable extends React.Component {
         });
       } else {
         alert("更改失败");
+      }
+    });
+  };
+  // 删除管理用户
+  removeManage = async (_id) => {
+    // console.log("我是删除按钮");
+    await remove("/manageInfo", { _id }).then((res) => {
+      if (res.result.ok == 1) {
+        console.log(res);
+        let result = this.state.data.filter((item) => item._id == _id);
+        this.setState({
+          data: result,
+        });
+        console.log(result);
+      } else {
+        alert("删除失败");
       }
     });
   };
@@ -302,6 +319,16 @@ class JuTable extends React.Component {
                 禁用
               </Button>
             )}
+            <Button
+              size="small"
+              type="primary"
+              danger
+              onClick={() => {
+                this.removeManage(manage._id);
+              }}
+            >
+              删除
+            </Button>
           </Space>
         ),
       },

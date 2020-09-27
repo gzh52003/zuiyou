@@ -29,9 +29,17 @@ class Reg extends React.Component {
         const result = await post("/reg", { ...value, vcode: code }).then(
           (res) => res
         );
-        this.props.history.push("/manage");
+        if (result.code == 10) {
+          alert("验证码输入错误！请重新输入");
+          this.textInput.state.value = "";
+          this.getVcode();
+          return;
+        } else {
+          this.props.history.push("/manage");
+        }
       } else {
-        alert("用户存在或验证码错误");
+        alert("用户已经存在");
+        this.textInput.state.value = "";
         this.getVcode();
       }
       // if(result.data)
@@ -131,6 +139,9 @@ class Reg extends React.Component {
               <Input
                 prefix={<SafetyOutlined className="site-form-item-icon" />}
                 placeholder="code"
+                ref={(input) => {
+                  this.textInput = input;
+                }}
               />
               <div
                 className="code ant-input"
