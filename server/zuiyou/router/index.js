@@ -13,6 +13,7 @@ const login = require("./login");
 const upload = require("./upload");
 const vcodeRouter = require("./vcode");
 const managelogin = require("./managelogin");
+const manageInfo = require("./manageInfo");
 // 必须调用Router方法，不能直接使用！！！
 const router = Router();
 
@@ -50,7 +51,9 @@ router.use("/reg", reg);
 // 登录
 router.use("/login", login);
 // 后台管理员登录
-router.use("./managelogin", managelogin);
+router.use("/managelogin", managelogin);
+// 查询后台管理员
+router.use("/manageInfo", manageInfo);
 //验证码
 router.use("/vcode", vcodeRouter);
 

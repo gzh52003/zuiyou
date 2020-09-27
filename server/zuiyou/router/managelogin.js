@@ -22,6 +22,12 @@ router.post("/", async (req, res) => {
     manageName: username,
     managePsw: password,
   });
+
+  console.log("result", result);
+  console.log("我进来了");
+  if (result[0].isStop) {
+    res.send({ code: 304 });
+  }
   if (result.length > 0) {
     // 生成token
     let authorization;

@@ -16,13 +16,14 @@ class Login extends React.Component {
   };
   handleSubmit = async (value, e) => {
     // this.props.history.push({ pathname: "/app" });
-    console.log(this.props);
+    console.log(value);
+
     const result = await post("/managelogin", {
-      // username: value.username,
-      // password: value.password,
+      username: value.username,
+      password: value.password,
       remember: JSON.stringify(value.remember),
       vcode: value.code,
-      ...value,
+      // ...value,
     }).then(
       (res) => res
       // () => {
@@ -38,9 +39,13 @@ class Login extends React.Component {
       this.textInput.state.value = "";
       this.getVcode();
       alert("验证码错误，请重新输入！");
+    } else if (result.code == 304) {
+      alert("你已经被禁用了！晚上来我办公室解密。");
+      return;
     } else {
       // console.log(result.data.authorization);
       // console.log(result.data.manageName);
+      console.log(result);
       window.localStorage.setItem("authorization", result.data.authorization);
       window.localStorage.setItem("manageType", result.data.manageType);
       window.localStorage.setItem("manageName", result.data.manageName);
