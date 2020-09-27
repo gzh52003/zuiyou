@@ -129,6 +129,7 @@ class App extends React.PureComponent {
     this.props.history.push(path);
     this.state.routelist = [];
     this.state.routelist.push(path.replace(/\/[a-zA-Z]+\//, ""));
+    console.log("this.state.routelist", this.state.routelist);
     console.log("state.route", this.state.routelist);
   };
   onCollapse = (collapsed) => {
@@ -196,9 +197,7 @@ class App extends React.PureComponent {
     //   }
     // }
   }
-  shouldComponentUpdate() {
-    console.log("我哼");
-  }
+
   render() {
     // console.log("第一次", this.state.current);
     let { menu, secmenu, type } = this.state;

@@ -70,7 +70,7 @@ class Login extends React.Component {
   //   console.log("allValues", allValues);
   // };
   onFinish = (values) => {
-    // console.log("Received values of form: ", values);
+    console.log("我是onfinish ", values);
     this.handleSubmit(values);
   };
 
