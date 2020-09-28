@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { Toast, WhiteSpace, WingBlank, Button } from 'antd-mobile';
 const BASE_URL="http://42.194.179.50/zyapi";
 const source = axios.CancelToken.source();
 function uploadMedia(payload,callback1,callback2){
