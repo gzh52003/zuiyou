@@ -1,0 +1,86 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "554469",
+      "name": "向下箭头",
+      "font_class": "iconset0435",
+      "unicode": "e73a",
+      "unicode_decimal": 59194
+    },
+    {
+      "icon_id": "554470",
+      "name": "向上箭头",
+      "font_class": "iconset0436",
+      "unicode": "e73b",
+      "unicode_decimal": 59195
+    },
+    {
+      "icon_id": "1317783",
+      "name": "语音",
+      "font_class": "yuyin",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "2118520",
+      "name": "投票",
+      "font_class": "toupiao",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "3996608",
+      "name": "转发",
+      "font_class": "zhuanfa",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "6582264",
+      "name": "播放2",
+      "font_class": "bofang",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "8328310",
+      "name": "相册",
+      "font_class": "tupian",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "9592590",
+      "name": "HTSCIT_留言",
+      "font_class": "liuyan",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "12686941",
+      "name": "链接",
+      "font_class": "icon-",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "13259971",
+      "name": "at",
+      "font_class": "at",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "16840401",
+      "name": "井号",
+      "font_class": "jinghao",
+      "unicode": "e71a",
+      "unicode_decimal": 59162
+    }
+  ]
+}

@@ -80,7 +80,7 @@ function Footer(props) {
               </div>
             }
             selected={selectedTab === "blueTab"}
-            onPress={() => { item.path ? changePath(item.path) : dispatch({ type: "show" }) }}
+            onPress={() => { item.path ? changePath(item.path) : dispatch({ type: "showInvitate" }) }}
             data-seed="logId"
           ></TabBar.Item>
         );
