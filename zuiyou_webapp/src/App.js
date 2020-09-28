@@ -3,7 +3,9 @@ import { Route, Redirect, Switch} from "react-router-dom";
 import {GlobalContext} from './store/index'
 import "./App.scss";
 import "antd-mobile/dist/antd-mobile.css";
-import ToInvitate from "./views/ToInvitate";
+import ToInvitate from "./views/Toinvitate/ToInvitate";
+import AddPicture from "./views/Toinvitate/addPicture";
+import { Progress } from "antd-mobile";
 const Footer = lazy(() => import("./Footer"));
 const Home = lazy(() => import("./views/Home"));
 const Found = lazy(() => import("./views/Found"));
@@ -12,17 +14,22 @@ const Mine = lazy(() => import("./views/Mine"));
 const Reg = lazy(() => import("./views/Reg"));
 
 function App() {
-  const {state } = useContext(GlobalContext)
+  const {state} = useContext(GlobalContext)
   return (
     <>
     {/* <Flex direction="column"> */}
-    <ToInvitate></ToInvitate>
+    <ToInvitate/>
+    {/* <AddPicture/> */}
     <div className="flex-container" style={{display:state.showInvitate?"none":"flex"}}>
         <Suspense
           fallback={
             <div>内容加载中</div>
           }
           >
+          <div style={{display:state.percent===0||state.percent===100?"none":"block"}}>
+           <Progress percent={state.percent}  position="normal" />
+           <span style={{fontSize:"12px"}}>内容正在发布中...</span>
+          </div>
           <main className="mainer">
           <Switch>
             <Route path="/Home" component={Home}></Route>

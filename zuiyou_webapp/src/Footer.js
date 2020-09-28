@@ -77,6 +77,7 @@ function Footer(props) {
                 {item.selectedIcon}
               </div>
             }
+
             selected={selectedTab === item.path}
             onPress={() => { 
               changeSelectedTab(item.path)
