@@ -8,46 +8,100 @@ import userAction, { login } from "../../store/actions/user";
 // 用于合并action
 import { bindActionCreators } from "redux";
 import "../scss/login.scss";
-export default class Login extends React.Component {
+
+@connect()
+class Login extends React.Component {
   state = {
     vcode: "",
   };
   handleSubmit = async (value, e) => {
     // this.props.history.push({ pathname: "/app" });
-    console.log(value);
-    const result = await get("/login")
-      .then((res) => JSON.stringify(res))
-      .catch("错误");
+    console.log(this.props);
+    const result = await post("/managelogin", {
+      // username: value.username,
+      // password: value.password,
+      remember: JSON.stringify(value.remember),
+      vcode: value.code,
+      ...value,
+    }).then(
+      (res) => res
+      // () => {
+      //   window.alert("错误");
+      // }
+    );
+
+    if (result.code == 0) {
+      this.getVcode();
+      this.textInput.state.value = "";
+      alert("用户名或密码错误");
+    } else if (result.code == 10) {
+      this.textInput.state.value = "";
+      this.getVcode();
+      alert("验证码错误，请重新输入！");
+    } else {
+      // console.log(result.data.authorization);
+      // console.log(result.data.manageName);
+      window.localStorage.setItem("authorization", result.data.authorization);
+      window.localStorage.setItem("manageType", result.data.manageType);
+      window.localStorage.setItem("manageName", result.data.manageName);
+      window.localStorage.setItem("code", 2000);
+      this.props.dispatch({
+        type: "manage",
+        manage: {
+          manageName: result.data.manageName,
+          manageType: result.data.manageType,
+          authorization: result.data.authorization,
+          code: 2000,
+        },
+      });
+      this.props.history.push("/manage");
+
+      // this.props.history.push("/manage");
+    }
     console.log(result);
   };
-  aa = (changedValues, allValues) => {
-    console.log("changedValues", changedValues);
-    console.log("allValues", allValues);
-  };
+  // aa = (changedValues, allValues) => {
+  //   console.log("changedValues", changedValues);
+  //   console.log("allValues", allValues);
+  // };
   onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    // console.log("Received values of form: ", values);
     this.handleSubmit(values);
   };
 
   getVcode = async () => {
     const vcode = await get("/vcode").then((res) => res.data);
-    console.log(vcode);
+    // console.log(vcode);
     // react只能通过setState修改state的值
     this.setState({
       vcode: vcode,
     });
-    console.log(this.state.vcode);
+    // console.log(this.state.vcode);
     window.localStorage.setItem("vcode", vcode);
-    this.render();
     return vcode;
   };
   async componentWillMount() {
+    console.log(this.props);
+    this.getVcode();
+    let authorization = window.localStorage.getItem("authorization");
+    let manageName = window.localStorage.getItem("manageName");
+    let manageType = window.localStorage.getItem("manageType");
+    let code = window.localStorage.getItem("code");
+
     // 用户登录为过时，就跳转到原页面
-    if (window.localStorage.getItem("adminUserType")) {
-      this.props.history.push({ pathname: "/manage" });
-      // this.handleSubmit();
+    if (authorization && manageName && manageType && code) {
+      const result = await get("/managelogin/check", {
+        authorization,
+        manageName,
+        manageType,
+      }).then((res) => res);
+      console.log(result);
+      if (result.code == 200) {
+        this.props.history.push("/manage");
+      }
     } else {
       const result = await this.getVcode();
+      window.localStorage.clear();
       window.localStorage.setItem("vcode", result);
     }
   }
@@ -91,6 +145,9 @@ export default class Login extends React.Component {
           >
             <div className="demo">
               <Input
+                ref={(input) => {
+                  this.textInput = input;
+                }}
                 prefix={<SafetyOutlined className="site-form-item-icon" />}
                 placeholder="code"
               />
@@ -112,7 +169,6 @@ export default class Login extends React.Component {
                 type="primary"
                 htmlType="submit"
                 className="login-form-button"
-                onClick={this.handleSubmit}
               >
                 登录
               </Button>
@@ -123,7 +179,7 @@ export default class Login extends React.Component {
     );
   }
 }
-
+export default Login;
 //使用高阶组件  react-redux里面有两个很重要的组件，Provider和connect
 
 // // const mapStateToProps = ({currentUser})=>({currentUser}) 相当于

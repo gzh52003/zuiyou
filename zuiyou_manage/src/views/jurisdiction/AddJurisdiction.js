@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Form,
   Input,
@@ -10,16 +10,28 @@ import {
   InputNumber,
   TreeSelect,
   Switch,
-} from 'antd';
-
-document.title = "申请权限"
+} from "antd";
+import checklocation from "../../utils/common";
+import { useHistory } from "react-router-dom";
+document.title = "申请权限";
 const FormSizeDemo = () => {
-  const [componentSize, setComponentSize] = useState('default');
-
+  const [componentSize, setComponentSize] = useState("default");
+  let history = useHistory();
+  useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      let code = await checklocation(history);
+      // ...
+      if (code != window.localStorage.getItem("code")) {
+        history.push("/login");
+        window.localStorage.clear();
+      }
+    }
+    fetchData();
+  });
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
   };
-
   return (
     <>
       <Form
@@ -55,12 +67,12 @@ const FormSizeDemo = () => {
           <TreeSelect
             treeData={[
               {
-                title: 'Light',
-                value: 'light',
+                title: "Light",
+                value: "light",
                 children: [
                   {
-                    title: 'Bamboo',
-                    value: 'bamboo',
+                    title: "Bamboo",
+                    value: "bamboo",
                   },
                 ],
               },
@@ -71,12 +83,12 @@ const FormSizeDemo = () => {
           <Cascader
             options={[
               {
-                value: 'zhejiang',
-                label: 'Zhejiang',
+                value: "zhejiang",
+                label: "Zhejiang",
                 children: [
                   {
-                    value: 'hangzhou',
-                    label: 'Hangzhou',
+                    value: "hangzhou",
+                    label: "Hangzhou",
                   },
                 ],
               },

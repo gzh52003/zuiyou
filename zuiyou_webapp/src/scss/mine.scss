@@ -1,0 +1,25 @@
+.dlzc{
+  background-color: #1196fd;
+  p{
+    width: 100%;
+    height: 120px;
+    margin:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .am-button{
+      width: 100%;
+      display: block;
+    }
+  }
+}
+.mine{
+  width: 100%;
+  height: 200px;
+  background: url(../assets/50e6c0f6cf2be4066a7895670af7ce2.jpg);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  .am-drawer-sidebar{
+    width: 100%;
+  }
+}
