@@ -7,7 +7,7 @@ import "./App.scss";
 import "antd-mobile/dist/antd-mobile.css";
 import { createFromIconfontCN } from '@ant-design/icons';
 const MyIcon = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_2085648_xnxr2z1tpg.js', 
+  scriptUrl: '//at.alicdn.com/t/font_2085648_xnxr2z1tpg.js',
 });
 
 function Footer(props) {
@@ -77,14 +77,10 @@ function Footer(props) {
                 {item.selectedIcon}
               </div>
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> 7684059a850a8fbfa16eb845f2e34b61d793a835
             selected={selectedTab === item.path}
             onPress={() => { 
               changeSelectedTab(item.path)
-              item.path ? changePath(item.path) : dispatch({ type: "show" }) 
+              item.path ? changePath(item.path) : dispatch({ type: "show" })
             }}
             data-seed="logId"
           ></TabBar.Item>
