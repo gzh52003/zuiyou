@@ -1,27 +1,48 @@
 import React from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, Select } from "antd";
 import { UserOutlined, LockOutlined, SafetyOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import { post, get } from "../../utils/request";
+import checklocation from "../../utils/common";
 // 调用action中的方法
 import userAction, { login } from "../../store/actions/user";
 // 用于合并action
 import { bindActionCreators } from "redux";
 import "../scss/login.scss";
 
-export default class Login extends React.Component {
+const { Option } = Select;
+@connect((state) => ({ manage: state.managetype }))
+class Reg extends React.Component {
   state = {
     vcode: "",
   };
   handleSubmit = async (value, e) => {
     // this.props.history.push({ pathname: "/app" });
-    const { username, password, code } = { ...value };
-
-    if (username && password && code) {
-      const result = await post("/reg")
-        .then((res) => JSON.stringify(res))
-        .catch("错误");
-      console.log(result);
+    const { username, password, code, select } = { ...value };
+    // console.log({ ...value });
+    if (username && password && select && code) {
+      const checktest = await get("/reg/check", {
+        manageName: value.username,
+      }).then((res) => res);
+      console.log(checktest, "checktest");
+      if (checktest.code == 1) {
+        const result = await post("/reg", { ...value, vcode: code }).then(
+          (res) => res
+        );
+        if (result.code == 10) {
+          alert("验证码输入错误！请重新输入");
+          this.textInput.state.value = "";
+          this.getVcode();
+          return;
+        } else {
+          this.props.history.push("/manage");
+        }
+      } else {
+        alert("用户已经存在");
+        this.textInput.state.value = "";
+        this.getVcode();
+      }
+      // if(result.data)
     }
   };
   // Markup = () => {
@@ -32,25 +53,37 @@ export default class Login extends React.Component {
     console.log("changedValues", changedValues);
     // console.log("allValues", allValues);
   };
-  onFinish = (values) => {
-    // console.log("Received values of form: ", values);
-    this.handleSubmit(values);
+  onFinish = (value) => {
+    console.log("Received values of form: ", value);
+
+    this.handleSubmit(value);
   };
   getVcode = async () => {
     const vcode = await get("/vcode").then((res) => res.data);
-    console.log(vcode);
+    // console.log(vcode);
     // react只能通过setState修改state的值
     this.setState({
       vcode: vcode,
     });
-    console.log(this.state.vcode);
+    // console.log(this.state.vcode);
     window.localStorage.setItem("vcode", vcode);
-    this.render();
     return vcode;
   };
   async componentWillMount() {
     const result = await this.getVcode();
     window.localStorage.setItem("vcode", result);
+    let code = await checklocation(this.props.history);
+    console.log(this.props);
+    if (code == this.props.manage.code) {
+      console.log("我是成功的");
+    } else {
+      this.props.history.push("/login");
+    }
+    if (
+      localStorage.getItem("manageType") == "b262f6241493f2e570c762e214066820"
+    ) {
+      this.props.history.push("/manage");
+    }
   }
 
   render() {
@@ -88,6 +121,17 @@ export default class Login extends React.Component {
             />
           </Form.Item>
           <Form.Item
+            name="select"
+            // label="Select"
+            hasFeedback
+            rules={[{ required: true, message: "请选择权限!" }]}
+          >
+            <Select placeholder="请选择权限">
+              <Option value="admin">管理员</Option>
+              <Option value="vip">审评员</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
             name="code"
             rules={[{ required: true, message: "请输入验证码!" }]}
           >
@@ -95,6 +139,9 @@ export default class Login extends React.Component {
               <Input
                 prefix={<SafetyOutlined className="site-form-item-icon" />}
                 placeholder="code"
+                ref={(input) => {
+                  this.textInput = input;
+                }}
               />
               <div
                 className="code ant-input"
@@ -107,6 +154,16 @@ export default class Login extends React.Component {
           </Form.Item>
           <Form.Item>
             <Form.Item>
+              <Button
+                type="primary"
+                className="login-form-button"
+                onClick={() => {
+                  this.props.history.push("/manage");
+                }}
+              >
+                取消
+              </Button>
+              <div style={{ width: 80 }}></div>
               <Button
                 type="primary"
                 htmlType="submit"
@@ -122,7 +179,7 @@ export default class Login extends React.Component {
     );
   }
 }
-
+export default Reg;
 //使用高阶组件  react-redux里面有两个很重要的组件，Provider和connect
 
 // // const mapStateToProps = ({currentUser})=>({currentUser}) 相当于
