@@ -77,6 +77,10 @@ function Footer(props) {
                 {item.selectedIcon}
               </div>
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7684059a850a8fbfa16eb845f2e34b61d793a835
             selected={selectedTab === item.path}
             onPress={() => { 
               changeSelectedTab(item.path)
