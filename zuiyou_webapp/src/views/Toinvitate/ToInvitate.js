@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Icon, Button, Card, ImagePicker, Toast, Modal } from "antd-mobile";
 import uploadMedia, { uploadImg } from "../../utils/axios";
 import "antd-mobile/dist/antd-mobile.css";
-import "../../scss/ToInvitateIndex.scss";
+import "../../scss/ToInvitate.scss";
 import "../../iconfont/iconfont.css";
 import { GlobalContext } from "../../store";
 

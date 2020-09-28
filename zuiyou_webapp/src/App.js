@@ -4,7 +4,6 @@ import {GlobalContext} from './store/index'
 import "./App.scss";
 import "antd-mobile/dist/antd-mobile.css";
 import ToInvitate from "./views/Toinvitate/ToInvitate";
-import AddPicture from "./views/Toinvitate/addPicture";
 import { Progress } from "antd-mobile";
 const Footer = lazy(() => import("./Footer"));
 const Home = lazy(() => import("./views/Home"));
