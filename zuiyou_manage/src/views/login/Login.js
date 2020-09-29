@@ -41,6 +41,8 @@ class Login extends React.Component {
       alert("验证码错误，请重新输入！");
     } else if (result.code == 304) {
       alert("你已经被禁用了！晚上来我办公室解密。");
+      this.textInput.state.value = "";
+      this.getVcode();
       return;
     } else {
       // console.log(result.data.authorization);
