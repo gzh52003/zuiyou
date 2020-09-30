@@ -187,8 +187,11 @@ class JuTable extends React.Component {
   // 禁用管理用户
   changeisStop = async (_id, isStop, manageName) => {
     console.log("改变状态为禁用true", _id);
-    if (manageName == "marlen") {
-      alert("你无权限修改Marlen的信息。");
+    if (manageName == localStorage.getItem("manageName")) {
+      alert("你无法禁用自己");
+      return;
+    } else if (manageName == "marlen") {
+      alert("你无权限禁用Marlen");
       return;
     }
     await put("/manageInfo", { _id, isStop: !isStop }).then((res) => {
@@ -209,9 +212,12 @@ class JuTable extends React.Component {
   };
   // 更改管理用户类型
   changeManageType = async (value, _id, manageName) => {
-    // console.log("value, _id, manageType", value, _id, manageType);
-    if (manageName == "marlen") {
-      alert("你无权限修改Marlen的信息。");
+    console.log("value, _id, manageType", value, _id, manageName);
+    if (manageName == localStorage.getItem("manageName")) {
+      alert("你无法修改自己的信息");
+      return;
+    } else if (manageName == "marlen") {
+      alert("你无权限修改Marlen的信息");
       return;
     }
     await put("/manageInfo", { _id, manageType: value }).then((res) => {
@@ -232,12 +238,19 @@ class JuTable extends React.Component {
     });
   };
   // 删除管理用户
-  removeManage = async (_id) => {
+  removeManage = async (_id, manageName) => {
     // console.log("我是删除按钮");
+    if (manageName == localStorage.getItem("manageName")) {
+      alert("你无法删除自己");
+      return;
+    } else if (manageName == "marlen") {
+      alert("你无权限删除Marlen");
+      return;
+    }
     await remove("/manageInfo", { _id }).then((res) => {
       if (res.result.ok == 1) {
         console.log(res);
-        let result = this.state.data.filter((item) => item._id == _id);
+        let result = this.state.data.filter((item) => item._id !== _id);
         this.setState({
           data: result,
         });
@@ -324,7 +337,7 @@ class JuTable extends React.Component {
               type="primary"
               danger
               onClick={() => {
-                this.removeManage(manage._id);
+                this.removeManage(manage._id, manage.name);
               }}
             >
               删除

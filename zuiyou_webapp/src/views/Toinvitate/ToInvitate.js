@@ -1,11 +1,20 @@
 import React, { useContext, useState, useRef } from "react";
 import { withRouter } from "react-router-dom";
-import { Icon, Button, Card, ImagePicker, Toast, Modal } from "antd-mobile";
+import {
+  Icon,
+  Button,
+  Card,
+  ImagePicker,
+  Toast,
+  Modal,
+  Checkbox,
+} from "antd-mobile";
 import uploadMedia, { uploadImg } from "../../utils/axios";
 import "antd-mobile/dist/antd-mobile.css";
 import "../../scss/ToInvitate.scss";
 import "../../iconfont/iconfont.css";
 import { GlobalContext } from "../../store";
+import AddCategory from "./addCategory";
 
 function ToInvitate() {
   const alert = Modal.alert;
@@ -28,8 +37,10 @@ function ToInvitate() {
     dispatch({ type: "percent", value: percent * 100 });
   }
   function uploadMediafinish(code) {
-    if (code === 0) Toast.success("发布成功", 1);
-    else if (code === 1) Toast.fail("发布失败", 1);
+    if (code === 0) {
+      Toast.success("发布成功", 1);
+      dispatch({ type: "addCategory", value: "" });
+    } else if (code === 1) Toast.fail("发布失败", 1);
     dispatch({ type: "noshowInvitate" });
   }
   function getContext(e) {
@@ -44,6 +55,7 @@ function ToInvitate() {
         top: state.showInvitate ? "0%" : "100%",
       }}
     >
+      <AddCategory></AddCategory>
       <div className="showner-box">
         <Icon
           type="cross"
@@ -76,37 +88,74 @@ function ToInvitate() {
           type="primary"
           onClick={() => {
             console.log(mediaMes);
-            if(!mediaMes&&!imgMes&&!context)
-            {
+            if (!mediaMes && (!imgMes || !context)) {
               Toast.fail("请输入帖子内容", 1);
-            }else{
-              if (mediaMes) {
-                uploadMedia(mediaMes, progress, uploadMediafinish);
-                changemediaMes("");
-                changeshowVideo("none");
-                changeshowInputVideo("block");
-              }
-              if (imgMes) {
-                uploadImg(imgMes, progress, uploadMediafinish);
-                changeimgMes("");
-                changFilesList([]);
-              }
-               if (context) {
-                 console.log(context);
+            } else {
+              if (state.categoryMes == "") {
+                // 弹出
+                console.log("state.showAddCategory", state.showAddCategory);
+                dispatch({ type: "showAddCategory" });
+              } else {
+                if (mediaMes) {
+                  uploadMedia(mediaMes, progress, uploadMediafinish);
+                  changemediaMes("");
+                  changeshowVideo("none");
+                  changeshowInputVideo("block");
+                }
+                if (imgMes) {
+                  uploadImg(imgMes, progress, uploadMediafinish);
+                  changeimgMes("");
+                  changFilesList([]);
+                }
+                if (context) {
+                  console.log(context);
                 }
                 dispatch({ type: "noshowInvitate" });
+              }
             }
           }}
         >
           发布
         </Button>
       </div>
-      <div className="chose-category">
+
+      <div
+        className="chose-category"
+        onClick={() => {
+          dispatch({ type: "showAddCategory" });
+        }}
+      >
         <span style={{ float: "left" }}>
           <i className="iconfont icon-jinghao"></i>选择话题
         </span>
         <span style={{ float: "right" }}>选择合适的话题会有更多赞哦~ &gt;</span>
       </div>
+      {state.categoryMes == "" ? (
+        ""
+      ) : (
+        <div
+          className="cateGorybtn"
+          style={{
+            // width: "14vw",
+            minWidth: "14vw",
+            maxWidth: "20vw",
+            height: "3vh",
+            marginTop: "2px",
+            marginLeft: "6px",
+            borderRadius: "20px",
+            border: "1px dashed #9c9c9c",
+            display: "flex",
+            flexDirection: " row",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#108ee9",
+            fontSize: "14px",
+            color: "white",
+          }}
+        >
+          <span>{state.categoryMes}</span>
+        </div>
+      )}
       <div className="content">
         <textarea
           placeholder="我的快乐源泉"
@@ -114,6 +163,7 @@ function ToInvitate() {
           onChange={getContext}
         />
       </div>
+
       {state.showAddPic ? (
         <div className="addPicture">
           <Card>
