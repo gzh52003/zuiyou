@@ -4,11 +4,12 @@ const session = require("express-session");
 var cookie = require("cookie-parser");
 
 const cors = require("../utils/cors");
+const phoneVcode = require('../utils/phoneVcode')
 // const token = require('../utils/token');
 const user = require("./user");
 const order = require("./order");
 const goods = require("./goods");
-const reg = require("./reg");
+// const useReg = require("./useReg");
 const login = require("./login");
 const upload = require("./upload");
 const vcodeRouter = require("./vcode");
@@ -46,8 +47,8 @@ router.use("/goods", goods);
 
 // 上传
 router.use("/upload", upload);
-// 注册
-router.use("/reg", reg);
+// 用户注册
+// router.use("/useReg", useReg);
 // 登录
 router.use("/login", login);
 // 后台管理员登录
@@ -56,5 +57,6 @@ router.use("/managelogin", managelogin);
 router.use("/manageInfo", manageInfo);
 //验证码
 router.use("/vcode", vcodeRouter);
+router.use('/phoneVcode',phoneVcode)
 
 module.exports = router;

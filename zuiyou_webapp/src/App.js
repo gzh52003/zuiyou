@@ -5,12 +5,19 @@ import "./App.scss";
 import "antd-mobile/dist/antd-mobile.css";
 import ToInvitate from "./views/Toinvitate/ToInvitate";
 import { Progress } from "antd-mobile";
+
+import Login_vcode from './views/Login_vcode'
+import Login_pas from './views/Login_pas'
+import Reg from './views/Reg'
+
 const Footer = lazy(() => import("./Footer"));
 const Home = lazy(() => import("./views/Home"));
 const Found = lazy(() => import("./views/Found"));
 const News = lazy(() => import("./views/News"));
 const Mine = lazy(() => import("./views/Mine"));
-const Reg = lazy(() => import("./views/Reg"));
+// const Reg = lazy(()=>import("./views/Reg"))
+// const Login_vcode = lazy(() => import("./views/Login_vcode"));
+// const Login_pas = lazy(() => import("./views/Login_pas"));
 
 function App() {
   const {state} = useContext(GlobalContext)
@@ -36,6 +43,8 @@ function App() {
             <Route path="/News" component={News}></Route>
             <Route path="/Mine" component={Mine}></Route>
             <Route path="/Reg" component={Reg}></Route>
+            <Route path="/Login_vcode" component={Login_vcode}></Route>
+            <Route path="/Login_pas" component={Login_pas}></Route>
             <Redirect from="/" to="/home" exact></Redirect>
             <Route path="*" render={() => <div>404</div>}></Route>
           </Switch>

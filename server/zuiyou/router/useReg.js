@@ -2,9 +2,19 @@
 const router = express.Router();
 
 const { formatData, md5 } = require("../utils/tools");
-
+const sendCode = require('../utils/phoneNum');
 const mongo = require("../utils/mongo");
 
+router.get("/",async(req,res)=>{
+  const {phone} = req.query;
+  console.log("发送了验证码");
+  console.log(phone);
+
+
+  
+  sendCode(phone)
+  res.send(formatData())
+})
 
 router.post("/", async (req, res) => {
   let { username, password, imageUrl, select, vcode, cartInfo } = req.body;

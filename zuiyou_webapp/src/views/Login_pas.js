@@ -2,16 +2,11 @@ import React from 'react'
 import { Button, InputItem, Icon, Toast } from 'antd-mobile'
 import { WechatOutlined, QqOutlined, WeiboOutlined } from '@ant-design/icons'
 import { createForm } from 'rc-form'
-import { createFromIconfontCN } from '@ant-design/icons';
 import "../scss/reg.scss"
-const MyIcon = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_2085648_0to4nheze35.js',
-});
-class Reg extends React.Component {
+class login_pas extends React.Component {
   state = {
     phoneNum: '',
     password: '',
-    type: 'password',
     isGetNum: false,
     num: 60,
     r1: false,
@@ -49,8 +44,7 @@ class Reg extends React.Component {
         <div style={{ padding: 36, background: '#1E90FF' }}>
           <Icon onClick={() => { this.props.history.goBack() }} type='left' size='s' color="white" />
         </div>
-        <div className="reg"
-          style={{ padding: '60px 38px 97px' }}>
+        <div className="reg">
           <InputItem
             {...getFieldProps('phone')}
             type="phone"
@@ -62,39 +56,12 @@ class Reg extends React.Component {
             placeholder="请输入手机号"
           >+86 <Icon type="down" size='xxs' /></InputItem>
           <InputItem
-            style={{ textIndent: 16 }}
-            maxLength={6}
-            ref={inp => this.psd = inp}
-            clear
-            {...getFieldProps('password')}
-            type="text"
-            value={this.state.password}
-            onChange={async (v) => {
-              await this.setState({ password: v });
-              if (this.state.password.length >= 6) { console.log(this, this.psd); };
-              this.state.password.length == 6 ? this.setState({ r2: true }) : this.setState({ r2: false })
-            }}
-            placeholder="请输入验证码"
-            extra={<span style={{ fontSize: 12, height: 21, width: 80 }}
-              onClick={() => { this.numRun() }}>
-              <span> | </span>
-              {this.state.isGetNum ?
-                <span style={{ width: 60, display: 'inline-block', textAlign: "center", color: '#1E90FF' }}>{this.state.num}</span>
-                : '获取验证码'}</span>}
+            placeholder="输入密码"
           ></InputItem>
-          <InputItem
-            type={this.state.type === 'password' ? 'password' : 'text'} maxLength={16}
-            placeholder='设置6-16位密码' 
-            clear
-            extra={<span onClick={()=>this.state.type==='password'?this.setState({type:'text'}):this.setState({type:"password"})}>
-              {this.state.type==='password'?
-          <MyIcon type="icon-yanjing_bi" size='xxs' />
-        :<MyIcon type="icon-yanjing_kai" size='xxs' />}
-            </span>}
-          ></InputItem>
-          <Button type="primary" disabled={this.state.r1 && this.state.r2 ? false : true} onClick={this.goReg} style={{ borderRadius: 22, marginTop: 16, fontSize: 14 }}>注册</Button>
+          <Button type="primary" disabled={this.state.r1 && this.state.r2 ? false : true} onClick={this.goReg} style={{ borderRadius: 22, marginTop: 16, fontSize: 14 }}>登陆</Button>
           <p>
-            <span onClick={() => { this.props.history.push('/login_vcode') }}>登陆</span>
+            <span onClick={()=>{this.props.history.push('/login_pas')}}>密码登陆</span>
+          <span onClick={()=>{this.props.history.push('/reg')}}>没有账号？</span>
           </p>
         </div>
         <p style={{ width: "100%", marginTop: 80, textAlign: "center", color: "#aaa", fontSize: 10 }}>—— 其他方式登陆 ——</p>
@@ -114,6 +81,6 @@ class Reg extends React.Component {
   }
 }
 
-const NewReg = createForm()(Reg);
+const Newlogin_pas = createForm()(login_pas);
 
-export default NewReg
+export default Newlogin_pas
