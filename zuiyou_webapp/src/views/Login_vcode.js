@@ -6,7 +6,7 @@ import "../scss/reg.scss"
 class login_vcode extends React.Component {
   state = {
     phoneNum: '',
-    password: '',
+    vnum: '',
     isGetNum: false,
     num: 60,
     r1: false,
@@ -34,7 +34,7 @@ class login_vcode extends React.Component {
     }
   }
   goReg = () => {
-    console.log(this.state.phoneNum, this.state.password);
+    console.log(this.state.phoneNum, this.state.vnum);
   }
 
   render() {
@@ -42,7 +42,7 @@ class login_vcode extends React.Component {
     return (
       <div className="regBlock">
         <div style={{ padding: 36, background: '#1E90FF' }}>
-          <Icon onClick={() => { this.props.history.goBack() }} type='left' size='s' color="white" />
+          <Icon onClick={() => { this.props.history.push('/mine') }} type='cross' size='s' color="white" />
         </div>
         <div className="reg">
           <InputItem
@@ -60,13 +60,13 @@ class login_vcode extends React.Component {
             maxLength={6}
             ref={inp=>this.psd = inp}
             clear
-            {...getFieldProps('password')}
+            {...getFieldProps('vnum')}
             type="text"
-            value={this.state.password}
+            value={this.state.vnum}
             onChange={async (v) => {
-              await this.setState({ password: v });
-              if(this.state.password.length>=6){console.log(this,this.psd);};
-              this.state.password.length == 6 ? this.setState({ r2: true }) : this.setState({ r2: false })
+              await this.setState({ vnum: v });
+              if(this.state.vnum.length>=6){console.log(this,this.psd);};
+              this.state.vnum.length == 6 ? this.setState({ r2: true }) : this.setState({ r2: false })
             }}
             placeholder="请输入验证码"
             extra={<span style={{ fontSize: 12, height: 21, width: 80 }}

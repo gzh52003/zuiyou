@@ -9,12 +9,13 @@ import { Progress } from "antd-mobile";
 import Login_vcode from './views/Login_vcode'
 import Login_pas from './views/Login_pas'
 import Reg from './views/Reg'
+import Mine from './views/Mine'
 
 const Footer = lazy(() => import("./Footer"));
 const Home = lazy(() => import("./views/Home"));
 const Found = lazy(() => import("./views/Found"));
 const News = lazy(() => import("./views/News"));
-const Mine = lazy(() => import("./views/Mine"));
+// const Mine = lazy(() => import("./views/Mine"));
 // const Reg = lazy(()=>import("./views/Reg"))
 // const Login_vcode = lazy(() => import("./views/Login_vcode"));
 // const Login_pas = lazy(() => import("./views/Login_pas"));

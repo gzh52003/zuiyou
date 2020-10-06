@@ -16,7 +16,6 @@ router.get("/", async (req, res) => {
   //生成6位随机数
   let randomNum = () => { return Math.floor(Math.random() * 10) };
   const vcode = "" + randomNum() + randomNum() + randomNum() + randomNum() + randomNum() + randomNum();
-  req.session.vcode = vcode;
   //发送到指定的手机号码
   const {phone} = req.query;
   // 生成手机验证码：腾讯云
@@ -41,7 +40,9 @@ router.get("/", async (req, res) => {
   }
 
   // 把验证码存入会话Session
-  req.session.vcode = vcode;
+  console.log('前',req.session);
+  req.session.vnum = vcode;
+  console.log('后',req.session);
   sendCode(phone);
   res.send(formatData());
 });
