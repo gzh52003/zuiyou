@@ -1,4 +1,4 @@
-const express = require("express");
+﻿const express = require("express");
 const router = express.Router();
 const token = require("../utils/token");
 
@@ -7,7 +7,7 @@ const mongo = require("../utils/mongo");
 // 解构query
 router.post("/", async (req, res) => {
   let { username, password, vcode, remember } = req.body;
-
+// console.log(req.session);
   // 判断验证码时候正确
   if (vcode !== req.session.vcode) {
     // console.log("session->", req.session);
@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
       authorization = token.create({ username, manageType: result.manageType });
     }
 
-    console.log("我是检验result", result);
+    console.log("我是检验result", result,req.session);
     result = result[0];
     req.session.manageType = md5(result.manageType);
     console.log(req.session.manageType);

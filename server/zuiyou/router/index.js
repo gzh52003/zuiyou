@@ -4,6 +4,7 @@ const session = require("express-session");
 var cookie = require("cookie-parser");
 
 const cors = require("../utils/cors");
+const phoneVcode = require('../utils/phoneVcode')
 // const token = require('../utils/token');
 const user = require("./user");
 const order = require("./order");
@@ -14,6 +15,8 @@ const upload = require("./upload");
 const vcodeRouter = require("./vcode");
 const managelogin = require("./managelogin");
 const manageInfo = require("./manageInfo");
+
+
 // 必须调用Router方法，不能直接使用！！！
 const router = Router();
 
@@ -28,13 +31,13 @@ router.use(cookie());
 router.use(
   session({
     secret: "yiliang",
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie: {
       // 设置cookie有效期
       maxAge: 1000 * 60 * 60 * 2,
-      //sameSite:'none',
-      //secure:true
+      // sameSite:true,
+      // secure:true
     },
   })
 );
@@ -46,7 +49,7 @@ router.use("/goods", goods);
 
 // 上传
 router.use("/upload", upload);
-// 注册
+// 用户注册
 router.use("/reg", reg);
 // 登录
 router.use("/login", login);
@@ -56,5 +59,6 @@ router.use("/managelogin", managelogin);
 router.use("/manageInfo", manageInfo);
 //验证码
 router.use("/vcode", vcodeRouter);
+router.use('/phoneVcode',phoneVcode)
 
 module.exports = router;

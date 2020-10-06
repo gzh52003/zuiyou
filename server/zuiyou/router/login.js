@@ -6,32 +6,19 @@ const { formatData, md5 } = require("../utils/tools");
 const mongo = require("../utils/mongo");
 // 解构query
 router.get("/", async (req, res) => {
-  let { username, password, vcode, mdl } = req.query;
-
-  // 判断验证码时候正确
-  if (vcode !== req.session.vcode) {
-    // console.log("session->", req.session);
-    // console.log("vcode->", vcode);
-    // console.log("session.vcode->", req.session.vcode);
-    res.send(formatData({ code: 10 }));
-    return;
-  }
+  let { username, password,phone } = req.query;
   // 加密后查询用户
   password = md5(password);
-  let result = await mongo.find("user", {
-    username,
+  let result = await mongo.find("userInfo", {
+    phone,
     password,
   });
   if (result.length > 0) {
     // 生成token
-    let authorization;
-    if (mdl === "true") {
-      authorization = token.create({ username }, "7d");
-    } else {
-      authorization = token.create({ username });
-    }
+    let authorization = token.create({ phone });
     result = result[0];
     result.authorization = authorization;
+    result.password = '';
 
     res.send(formatData({ data: result }));
   } else {
