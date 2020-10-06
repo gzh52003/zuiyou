@@ -259,6 +259,7 @@ class JuTable extends React.Component {
         alert("删除失败");
       }
     });
+    await remove("/changemanageType", { manageName });
   };
   render() {
     console.log("render");
