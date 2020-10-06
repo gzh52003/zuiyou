@@ -1,7 +1,6 @@
-const express = require("express");
+﻿const express = require("express");
 const mongo = require("../utils/mongo");
 const { code } = require("statuses");
-const { formatData, md5 } = require("../utils/tools");
 const router = express.Router();
 router.use(express.urlencoded({ extended: false }), express.json());
 // 一进来页面查询到所有的数据
@@ -26,19 +25,6 @@ router.get("/", async (req, res) => {
   });
   res.send(msg);
   // console.log(msg);
-});
-// 查询是否存在
-router.get("/find", async (req, res) => {
-  const { manageName } = req.query;
-
-  const result = await mongo.find("adminInfo", { manageName });
-  // console.log("result", result[0]._id);
-  console.log("result", result);
-  if (result.length > 0) {
-    res.send({ code: 0, _id: result[0]._id });
-  } else {
-    res.send(formatData());
-  }
 });
 // 模糊查询
 router.get("/mohu", async (req, res) => {
