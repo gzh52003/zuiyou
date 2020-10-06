@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
     ignoreChars: "0o1il",
     background: "#56ac67",
     color: true,
-    fontSize: 40,
+    fontSize: 32,
     height: 32,
     width: 80,
   };

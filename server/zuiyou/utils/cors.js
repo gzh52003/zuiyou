@@ -1,4 +1,4 @@
-﻿const allow_origin = ['http://42.194.179.50',' http://ihuanu.cn',' http://www.ihuanu.cn','http://10.3.138.19:8080','http://localhost:3000']
+﻿const allow_origin = ['http://42.194.179.50',' http://ihuanu.cn',' http://www.ihuanu.cn','http://10.3.138.19:8080','http://localhost:3000','http://localhost:3001']
 // let curOrigin = http://10.3.138.33:8080
 
 function cors(req,res,next){
