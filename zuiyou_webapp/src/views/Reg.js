@@ -18,15 +18,13 @@ class Reg extends React.Component {
     isGetNum: false,
     num: 60,
     r1: false,
-    r2: false
+    r2: false,
+    isOk:true
   }
   // 走短信验证码倒计时
   numRun = () => {
-    if (this.state.r1 === false) { return }
-    else {
-      fetch('http://42.194.179.50/zyapi/phoneVcode/?phone=' + this.state.phoneNum).then((res) => res.json(),{
-        credentials:'include',
-      }).then((data) => {
+    if (this.state.r1 === true && this.state.isGetNum === false && this.state.isOk) {
+      fetch('http://42.194.179.50/zyapi/phoneVcode/?phone=' + this.state.phoneNum,{credentials: 'include',}).then((res) => res.json()).then((data) => {
         if (data.code === 1) {
           Toast.info('验证码已发送', 2, null, false);
           this.setState({ isGetNum: true });
@@ -41,6 +39,8 @@ class Reg extends React.Component {
           Toast.info('验证码发送失败', 2, null, false);
         }
       })
+    }else{
+      return 
     }
   }
   regCheck = () => {
@@ -48,41 +48,45 @@ class Reg extends React.Component {
     fetch('http://42.194.179.50/zyapi/reg/check/?phone=' + this.state.phoneNum).then(res => res.json()).then(data => {
       if (data.code == "0") {
         alert('', '已有账号，是否直接登陆？', [
-          { text: '否', onPress: () => { return } },
+          { text: '否', onPress: () => { this.setState({isOk:false})} },
           {
             text: '是', onPress: () => this.props.history.push({
               pathname: "/login_pas", state: { phone: this.state.phoneNum }
             })
           },
         ])
+      }else{
+        this.setState({isOk:true})
       }
     })
   }
   goReg = () => {
-    // axios.post('http://42.194.179.50/zyapi/reg/',{
-    //   phone: this.state.phoneNum,
-    //   password: this.state.password,
-    //   vnum: this.state.vnum
-    // },{withCredentials: true}).then(d=>{
-    //   console.log(d);
-    // })
-    fetch('http://42.194.179.50/zyapi/reg/', {
-      method:'post',
-      credentials:'include',
-      headers:{'Content-Type':'application/json;charset=utf-8'},
-      body: JSON.stringify({
-        phone: this.state.phoneNum,
-        password: this.state.password,
-        vnum: this.state.vnum
+    if(this.state.isOk){
+      fetch('http://42.194.179.50/zyapi/reg/', {
+        method: 'post',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json;charset=utf-8' },
+        body: JSON.stringify({
+          phone: this.state.phoneNum,
+          password: this.state.password,
+          vnum: this.state.vnum
+        })
+      }).then(res => res.json()).then(data => {
+        if (data.code == 1) {
+          sessionStorage.setItem('userInfo',JSON.stringify(data.data))
+          localStorage.setItem('yzId',data.data.authorization)
+          localStorage.setItem('userPhone',data.data.phone)
+          this.props.history.push('/mine');
+        } else if(data.code == 10){
+          Toast.info('验证码错误', 3, null, false)
+        }else {
+          this.setState({ password: '' });
+          Toast.info('注册失败,再尝试一下吧', 4, null, false)
+        }
       })
-    }).then(res => res.json()).then(data => {
-      if (data.code == 1) {
-        this.props.history.push('/mine');
-      } else {
-        this.setState({ password: '' });
-        Toast.info('注册失败,再尝试一下吧', 3, null, false)
-      }
-    })
+    }else{
+      Toast.info('注册失败，账号已存在',2,null,false)
+    }
   }
   render() {
     const { getFieldProps } = this.props.form;

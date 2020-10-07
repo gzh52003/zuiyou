@@ -25,6 +25,9 @@ class login_pas extends React.Component {
         fetch('http://42.194.179.50/zyapi/login/?phone='+this.state.phoneNum+"&password="+
         this.state.password).then(res=>res.json()).then(data=>{
           if(data.code==1){
+            sessionStorage.setItem('userInfo',JSON.stringify(data.data))
+            localStorage.setItem('yzId',data.data.authorization)
+            localStorage.setItem('userPhone',data.data.phone)
             this.props.history.push('/mine');
           }else{
             this.setState({password:''});
@@ -32,7 +35,6 @@ class login_pas extends React.Component {
           }
         })
     }
-
     render() {
         const { getFieldProps } = this.props.form;
         return (
