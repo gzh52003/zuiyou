@@ -7,7 +7,7 @@ const mongo = require("../utils/mongo");
 // 解构query
 router.post("/", async (req, res) => {
   let { username, password, vcode, remember } = req.body;
-// console.log(req.session);
+console.log("333",req.session);
   // 判断验证码时候正确
   if (vcode !== req.session.vcode) {
     // console.log("session->", req.session);
