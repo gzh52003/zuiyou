@@ -6,6 +6,7 @@ import "antd-mobile/dist/antd-mobile.css";
 import ToInvitate from "./views/Toinvitate/ToInvitate";
 import { Progress } from "antd-mobile";
 
+// 刘益良页面
 import Login_vcode from './views/Login_vcode'
 import Login_pas from './views/Login_pas'
 import Reg from './views/Reg'
@@ -42,6 +43,7 @@ function App() {
             <Route path="/Home" component={Home}></Route>
             <Route path="/Found" component={Found}></Route>
             <Route path="/News" component={News}></Route>
+
             <Route path="/Mine" component={Mine}></Route>
             <Route path="/Reg" component={Reg}></Route>
             <Route path="/Login_vcode" component={Login_vcode}></Route>

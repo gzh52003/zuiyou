@@ -1,12 +1,44 @@
 .dlzc{
-  background-color: #1196fd;
-  p{
+  // background-color: #1196fd;
+  height: 100%;
+  .isLogin{
+    margin: 0;
+    background: url(../assets/b_img_login.jpg) no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 36vh;
+    .set{
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      display: inline-block;
+      padding: 5px;
+      border-radius: 3px;
+      background-color: rgba(66, 66, 66, .2);
+    }
+    .am-wingblank{
+      padding-top: 68px;
+      .am-card{
+        background: rgba(13, 13, 13, 0);
+        &::before{
+          display: none;
+        }
+        .am-card-body{
+          &::before{
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  .noLogin{
     width: 100%;
     height: 120px;
     margin:0;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #1398ff;
     .am-button{
       width: 100%;
       display: block;

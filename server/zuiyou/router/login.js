@@ -43,14 +43,15 @@ router.get("/vnum", async (req, res) => {
     res.send(formatData({ code: 10, msg: '验证码错误' }));
   }
 });
-router.get("/check", (req, res) => {
+router.get("/check", async (req, res) => {
   let { authorization, phone } = req.query;
-  //console.log("authorization",authorization);
   let result = token.verify(authorization);
-  //console.log("authorization",result)
   if (result) {
-    authorization = token.create({ phone });
-    res.send(formatData({ code: 200, data: authorization ,msg:'吃屎啦'}));
+    result = await mongo.find("userInfo", {
+      phone
+    });
+    result.authorization = token.create({ phone });
+    res.send(formatData({ code: 200, data: result}));
   } else {
     res.send(formatData({ code: 0 }));
   }
