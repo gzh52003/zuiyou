@@ -1,4 +1,4 @@
-const router = require('express').Router();
+﻿const router = require('express').Router();
 const QcloudSms = require('qcloudsms_js');
 const { formatData } = require("../utils/tools");
 
@@ -40,9 +40,10 @@ router.get("/", async (req, res) => {
   }
 
   // 把验证码存入会话Session
-  console.log('前',req.session);
   req.session.vnum = vcode;
-  console.log('后',req.session);
+//console.log(vcode)
+  //发送验证码
+
   sendCode(phone);
   res.send(formatData());
 });

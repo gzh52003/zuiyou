@@ -6,7 +6,7 @@ const fs = require("fs");
 
 const mongo = require("../utils/mongo");
 const { formatData, md5 } = require("../utils/tools");
-// console.log(1);
+console.log(1);
 // 配置上传参数
 let storage = multer.diskStorage({
   // 上传文件保存目录，无则自动创建

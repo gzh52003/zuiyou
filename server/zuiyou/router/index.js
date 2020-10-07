@@ -36,7 +36,8 @@ router.use(
     cookie: {
       // 设置cookie有效期
       maxAge: 1000 * 60 * 60 * 2,
-      // sameSite:true,
+      resave:false,
+      sameSite:"none",
       // secure:true
     },
   })

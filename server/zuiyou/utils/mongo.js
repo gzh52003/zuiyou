@@ -48,7 +48,7 @@ async function update(colName, query, newData) {
   if (query._id && typeof query._id === "string") {
     query._id = ObjectId(query._id);
   }
-
+   
   const result = await collection.updateMany(query, { $set: newData });
   client.close();
   return result;
@@ -57,8 +57,8 @@ async function update(colName, query, newData) {
 async function fuzzyFind(colName, query = {}, option = {}) {
   const { client, db } = await connect();
   const collection = db.collection(colName);
-  // console.log(query,888)
-
+// console.log(query,888)
+ 	
   // 查询到的所有集合
   let key = Object.keys(query)[0];
   let value = Object.values(query)[0];
@@ -94,6 +94,7 @@ async function fuzzyFind(colName, query = {}, option = {}) {
 }
 // 查
 async function find(colName, query = {}, option = {}) {
+  
   const { client, db } = await connect();
   const collection = db.collection(colName);
   // 查询到的所有集合
