@@ -34,7 +34,7 @@ export function uploadImg(payload,callback1,callback2){
         cancelToken:source.token,
         data:payload
     }).then(res =>{
-        callback2(res.code);
+        callback2(res);
     })
 }
 export function invitateToEnder(payload){

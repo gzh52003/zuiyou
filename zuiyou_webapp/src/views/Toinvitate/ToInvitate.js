@@ -1,14 +1,7 @@
 import React, { useContext, useState, useRef } from "react";
 import { withRouter } from "react-router-dom";
-import {
-  Icon,
-  Button,
-  Card,
-  ImagePicker,
-  Toast,
-  Modal,
-} from "antd-mobile";
-import uploadMedia, { uploadImg,invitateToEnder } from "../../utils/axios";
+import { Icon, Button, Card, ImagePicker, Toast, Modal } from "antd-mobile";
+import uploadMedia, { uploadImg, invitateToEnder } from "../../utils/axios";
 import "antd-mobile/dist/antd-mobile.css";
 import "../../scss/ToInvitate.scss";
 import "../../iconfont/iconfont.css";
@@ -32,15 +25,55 @@ function ToInvitate() {
   function progress(progressEvent) {
     // 上传进度
     let percent = progressEvent.loaded / progressEvent.total;
-
     dispatch({ type: "percent", value: percent * 100 });
   }
-  function uploadMediafinish(code) {
-    if (code === 0) {
+  function uploadMediafinish(res) {
+    console.log(res)
+    if (res.data.code === 1||res.code===1) {
       Toast.success("发布成功", 1);
       dispatch({ type: "addCategory", value: "" });
-    } else if (code === 1) Toast.fail("发布失败", 1);
-    dispatch({ type: "noshowInvitate" });
+      //数据提交到后端
+      let da = new Date();
+      da = new Date(da);
+      let year = da.getFullYear();
+      let month = da.getMonth() + 1;
+      let date = da.getDate();
+      let hh = da.getHours();
+      let mm = da.getMinutes();
+      let ss = da.getSeconds();
+      da = [year, month, date].join("-") + " " + [hh, mm, ss].join(":");
+      let publicTime = da;
+      let user_id = localStorage.getItem("user_id");
+      let payload;
+      if (res.config) {
+        payload = {
+          user_id,
+          publicTime,
+          content: {
+            context,
+            "imgMes": res.data.data.uploadUrl,
+            "mediaMes": "",
+          },
+          commentId: "[]",
+          category: state.categoryMes,
+        }
+      } else {
+        payload = {
+          user_id,
+          publicTime,
+          content: {
+            context,
+            "imgMes":"",
+            "mediaMes": res.data.uploadUrl,
+          },
+          commentId: "[]",
+          category: state.categoryMes,
+        };
+      }
+      invitateToEnder(payload);
+    } else {
+      Toast.fail("发布失败", 1);
+    }
   }
   function getContext(e) {
     changeContext(e.target.value);
@@ -89,48 +122,52 @@ function ToInvitate() {
             if (!mediaMes && !imgMes && !context) {
               Toast.fail("请输入帖子内容", 1);
             } else {
-              if (state.categoryMes) {
+              if (!state.categoryMes) {
                 // 弹出话题选择
-                console.log("state.showAddCategory", state.showAddCategory);
                 dispatch({ type: "showAddCategory" });
               } else {
                 if (mediaMes) {
                   uploadMedia(mediaMes, progress, uploadMediafinish);
                   changemediaMes("");
+                  changeContext("");
                   changeshowVideo("none");
                   changeshowInputVideo("block");
-                }
-                if (imgMes) {
+                } else if (imgMes) {
                   uploadImg(imgMes, progress, uploadMediafinish);
                   changeimgMes("");
+                  changeContext("");
                   changFilesList([]);
                 }
-                if (context) {
-                  console.log(context);
-                }
-                //数据提交到后端
-                let da = new Date();
-                da = new Date(da);
-                let year = da.getFullYear();
-                let month = da.getMonth() + 1;
-                let date = da.getDate();
-                let hh = da.getHours();
-                let mm = da.getMinutes();
-                let ss = da.getSeconds();
-                da = [year, month, date].join("-") + " " + [hh, mm, ss].join(":");
-                publicTime=da;
-                invitateToEnder({
+                //只有context
+                else {
+                  //数据提交到后端
+                  let da = new Date();
+                  da = new Date(da);
+                  let year = da.getFullYear();
+                  let month = da.getMonth() + 1;
+                  let date = da.getDate();
+                  let hh = da.getHours();
+                  let mm = da.getMinutes();
+                  let ss = da.getSeconds();
+                  da =
+                    [year, month, date].join("-") +
+                    " " +
+                    [hh, mm, ss].join(":");
+                  let publicTime = da;
+                  let user_id = localStorage.getItem("user_id");
+                  invitateToEnder({
                     user_id,
                     publicTime,
-                    "content":{
+                    content: {
                       context,
-                      imgMes,
-                      mediaMes
+                      imgMes: "",
+                      mediaMes: "",
                     },
-                    "commentId":"[]",
-                    "category":state.categoryMes
-
-                })
+                    commentId: "[]",
+                    category: state.categoryMes,
+                  });
+                  changeContext("");
+                }
                 dispatch({ type: "noshowInvitate" });
               }
             }
@@ -174,7 +211,6 @@ function ToInvitate() {
               <ImagePicker
                 files={filesList}
                 onChange={(file) => {
-                  console.log(file);
                   changFilesList(file);
                   // //选择文件并上传
                   let formData = new FormData();
@@ -183,9 +219,6 @@ function ToInvitate() {
                   }
                   changeimgMes(formData);
                 }}
-                // ref={(el) => {
-                //   changeVideo(el);
-                // }}
                 selectable={true}
                 multiple={true}
               />

@@ -9,8 +9,6 @@ const initialState = {
 };
 
 function rootReducer(state, action) {
-  console.log("store.state", state);
-  console.log("store.action", action);
   switch (action.type) {
     case "showInvitate":
       return { ...state, showInvitate: true };

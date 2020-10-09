@@ -28,6 +28,7 @@ class login_pas extends React.Component {
             sessionStorage.setItem('userInfo',JSON.stringify(data.data))
             localStorage.setItem('yzId',data.data.authorization)
             localStorage.setItem('userPhone',data.data.phone)
+            localStorage.setItem('user_id',data.data._id)
             this.props.history.push('/mine');
           }else{
             this.setState({password:''});
