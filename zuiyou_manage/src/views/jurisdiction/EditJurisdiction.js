@@ -224,7 +224,7 @@ class JuTable extends React.Component {
       if (res.code === 200) {
         let resdata = this.state.data.map((item) => {
           if (item._id == _id) {
-            item.manageType = item.manageType == "admin" ? "vip" : "admin";
+            item.manageType = value;
           }
           return item;
         });
@@ -259,6 +259,7 @@ class JuTable extends React.Component {
         alert("删除失败");
       }
     });
+    await remove("/changemanageType", { manageName });
   };
   render() {
     console.log("render");
