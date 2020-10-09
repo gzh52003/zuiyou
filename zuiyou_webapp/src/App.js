@@ -11,6 +11,7 @@ import Login_vcode from './views/Login_vcode'
 import Login_pas from './views/Login_pas'
 import Reg from './views/Reg'
 import Mine from './views/Mine'
+import Bianji from './views/Bianji'
 
 const Footer = lazy(() => import("./Footer"));
 const Home = lazy(() => import("./views/Home"));
@@ -45,9 +46,11 @@ function App() {
             <Route path="/News" component={News}></Route>
 
             <Route path="/Mine" component={Mine}></Route>
+            <Route path="/Bianji" component={Bianji}></Route>
             <Route path="/Reg" component={Reg}></Route>
             <Route path="/Login_vcode" component={Login_vcode}></Route>
             <Route path="/Login_pas" component={Login_pas}></Route>
+
             <Redirect from="/" to="/home" exact></Redirect>
             <Route path="*" render={() => <div>404</div>}></Route>
           </Switch>
