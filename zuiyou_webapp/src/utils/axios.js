@@ -37,6 +37,14 @@ export function uploadImg(payload,callback1,callback2){
         callback2(res.code);
     })
 }
-
+export function invitateToEnder(payload){
+    axios({
+        url:BASE_URL + '/invitate',
+        method:'post',
+        withCredentials:false,
+        cancelToken:source.token,
+        data:payload
+    })
+}
 
 export default uploadMedia;

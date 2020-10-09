@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Tabs, WhiteSpace, Badge, Button } from "antd-mobile";
+import React, {  useContext } from "react";
+import { Tabs } from "antd-mobile";
 import "../../scss/addCategory.scss";
 import { GlobalContext } from "../../store";
 const tabs = [
@@ -16,26 +16,7 @@ const tabs = [
 
 function AddCategory() {
   const { state, dispatch } = useContext(GlobalContext);
-  // dispatch({type:"addCategory",value:""})
-  // let wenben = document.getElementsByClassName("am-tabs-default-bar-underline");
   let result;
-  // function changCate(tab, index) {
-  //   console.log("我点击进来了", tab, index);
-
-  //   // wenben[0].style.top = index * 8 + "% !important";
-  //   // console.log("wenben[0].style.top", wenben[0].style.top);
-  //   // console.log("wenben", wenben[0].style);
-  //   // Object.assign(wenben[0].style, {
-  //   //   top: index * 8 + "%",
-  //   // });
-  //   dispatch({ type: "addCategory", value: tab.title });
-  //   result = tab.title;
-  // }
-  // const [res, setData] = useState([]);
-  // useEffect(() => {
-  //   console.log("我便换了");
-  //   setData(result);
-  // }, [res]);
   return (
     <div
       style={{ top: state.showAddCategory ? "0" : "100%" }}
@@ -45,35 +26,30 @@ function AddCategory() {
         tabs={tabs}
         tabBarPosition="left"
         initialPage={1}
-        usePaged={true}
         onChange={(tab, index) => {
           dispatch({ type: "noshowAddCategory" });
           dispatch({ type: "addCategory", value: tab.title });
-          // console.log("onChange", index, tab);
         }}
-        // onTabClick={(tab, index) => {
-        //   console.log("onTabClick", index, tab);
-        // }}
+
       >
+      </Tabs>
         <div
           style={{
             display: "flex",
+            float:"left",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            width: "100%",
+            width: "70vw",
             height: "100%",
             marginTop: "-10px",
             backgroundColor: "#fff",
             color: "#108ee9",
           }}
         >
-          👈👈请选择左边的话题
+          请选择左边的话题
         </div>
-      </Tabs>
-      <WhiteSpace />
 
-      <WhiteSpace />
     </div>
   );
 }

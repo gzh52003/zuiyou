@@ -8,7 +8,8 @@
   z-index: 555;
   .am-tabs {
     box-sizing: border-box;
-    // margin-top: -8px;
+    width: 30vw;
+    float: left;
   }
   .am-tabs-tab-bar-wrap
     .am-tabs-default-bar-left
@@ -16,10 +17,10 @@
     .am-tabs-default-bar-tab {
     width: 30vw;
     z-index: 556;
-    // margin: -10px 0;
-    // height: 10% !important;
+
+  }
+  .am-tabs-default-bar-content{
+    height: 50vh;
   }
 }
-// .am-tabs-default-bar-underline {
-//   height: 8% !important;
-// }
+
