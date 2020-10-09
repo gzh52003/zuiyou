@@ -83,6 +83,9 @@
           height: 0;
         }
       }
+      &:not(.am-card-full)::before {
+        border: none;
+      }
       .am-image-picker-item {
         background: rgba(255, 255, 255, 0);
       }

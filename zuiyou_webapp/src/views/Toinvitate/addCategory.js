@@ -42,7 +42,6 @@ function AddCategory() {
             justifyContent: "center",
             width: "70vw",
             height: "100%",
-            marginTop: "-10px",
             backgroundColor: "#fff",
             color: "#108ee9",
           }}

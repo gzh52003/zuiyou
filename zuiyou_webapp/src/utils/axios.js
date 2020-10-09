@@ -46,5 +46,18 @@ export function invitateToEnder(payload){
         data:payload
     })
 }
-
+export function invitateFromEnder(payload={}){
+    let req="?";
+    for(let i in payload){
+        req+=`${i}=payload[${i}]&`
+   }
+   console.log('req=',req)
+    axios({
+        url:BASE_URL + '/invitate'+req,
+        method:'get',
+        withCredentials:false,
+        cancelToken:source.token,
+        data:payload
+    })
+}
 export default uploadMedia;
