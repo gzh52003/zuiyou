@@ -144,7 +144,7 @@ const FormSizeDemo = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [data]);
   // 批准
   const accept = async (val) => {
     let { manageName, changeType, _id, reason } = val;
