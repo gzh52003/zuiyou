@@ -19,9 +19,13 @@
     .am-wingblank{
       padding-top: 68px;
       .am-card{
-        background: rgba(13, 13, 13, 0);
+        background: rgba(99, 99, 99, 0.69);
         &::before{
           display: none;
+        }.am-card-header{
+          .am-card-header-extra{
+            flex: 0;
+          }
         }
         .am-card-body{
           &::before{
