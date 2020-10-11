@@ -80,7 +80,7 @@ function Footer(props) {
             selected={selectedTab === item.path}
             onPress={() => {
               changeSelectedTab(item.path)
-              item.path ? changePath(item.path) : dispatch({ type: "showInvitate" })
+              item.path ? changePath(item.path) :(localStorage.getItem("user_id")? dispatch({ type: "showInvitate" }):changePath("/Mine"))
             }}
             data-seed="logId"
           ></TabBar.Item>

@@ -56,6 +56,7 @@ function ToInvitate() {
           },
           commentId: "[]",
           category: state.categoryMes,
+          audit:"false"
         }
       } else {
         payload = {
@@ -68,6 +69,7 @@ function ToInvitate() {
           },
           commentId: "[]",
           category: state.categoryMes,
+          audit:"false"
         };
       }
       invitateToEnder(payload);
@@ -165,6 +167,7 @@ function ToInvitate() {
                     },
                     commentId: "[]",
                     category: state.categoryMes,
+                    audit:"false"
                   });
                   changeContext("");
                 }

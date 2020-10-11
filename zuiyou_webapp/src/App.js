@@ -4,6 +4,7 @@ import {GlobalContext} from './store/index'
 import "./App.scss";
 import "antd-mobile/dist/antd-mobile.css";
 import ToInvitate from "./views/Toinvitate/ToInvitate";
+import Comment from "./views/Comment/Comment";
 import { Progress } from "antd-mobile";
 
 // 刘益良页面
@@ -11,6 +12,7 @@ import Login_vcode from './views/Login_vcode'
 import Login_pas from './views/Login_pas'
 import Reg from './views/Reg'
 import Mine from './views/Mine'
+
 
 const Footer = lazy(() => import("./Footer"));
 const Home = lazy(() => import("./views/Home"));
@@ -26,6 +28,7 @@ function App() {
   return (
     <>
     {/* <Flex direction="column"> */}
+    <Comment/>
     <ToInvitate/>
     {/* <AddPicture/> */}
     <div className="flex-container" style={{display:state.showInvitate?"none":"flex"}}>
