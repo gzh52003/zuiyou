@@ -50,7 +50,8 @@ router.get("/check", async (req, res) => {
     result = await mongo.find("userInfo", {
       phone
     });
-    result.authorization = token.create({ phone });
+    result[0].authorization = token.create({ phone });
+    // console.log('查看',result);
     res.send(formatData({ code: 200, data: result}));
   } else {
     res.send(formatData({ code: 0 }));

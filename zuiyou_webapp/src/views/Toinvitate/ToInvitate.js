@@ -1,7 +1,7 @@
 import React, { useContext, useState, useRef } from "react";
 import { withRouter } from "react-router-dom";
 import { Icon, Button, Card, ImagePicker, Toast, Modal } from "antd-mobile";
-import uploadMedia, { uploadImg, invitateToEnder } from "../../utils/axios";
+import uploadMedia, { uploadImg, invitateToEnder ,getDate } from "../../utils/axios";
 import "antd-mobile/dist/antd-mobile.css";
 import "../../scss/ToInvitate.scss";
 import "../../iconfont/iconfont.css";
@@ -33,16 +33,8 @@ function ToInvitate() {
       Toast.success("发布成功", 1);
       dispatch({ type: "addCategory", value: "" });
       //数据提交到后端
-      let da = new Date();
-      da = new Date(da);
-      let year = da.getFullYear();
-      let month = da.getMonth() + 1;
-      let date = da.getDate();
-      let hh = da.getHours();
-      let mm = da.getMinutes();
-      let ss = da.getSeconds();
-      da = [year, month, date].join("-") + " " + [hh, mm, ss].join(":");
-      let publicTime = da;
+
+      let publicTime = getDate();
       let user_id = localStorage.getItem("user_id");
       let payload;
       if (res.config) {
@@ -54,8 +46,9 @@ function ToInvitate() {
             "imgMes": res.data.data.uploadUrl,
             "mediaMes": "",
           },
-          commentId: "[]",
+          commentId:[],
           category: state.categoryMes,
+          audit:"false"
         }
       } else {
         payload = {
@@ -66,11 +59,12 @@ function ToInvitate() {
             "imgMes":"",
             "mediaMes": res.data.uploadUrl,
           },
-          commentId: "[]",
+          commentId: [],
           category: state.categoryMes,
+          audit:"false"
         };
       }
-      invitateToEnder(payload);
+      invitateToEnder(payload,'/invitate');
     } else {
       Toast.fail("发布失败", 1);
     }
@@ -141,19 +135,8 @@ function ToInvitate() {
                 //只有context
                 else {
                   //数据提交到后端
-                  let da = new Date();
-                  da = new Date(da);
-                  let year = da.getFullYear();
-                  let month = da.getMonth() + 1;
-                  let date = da.getDate();
-                  let hh = da.getHours();
-                  let mm = da.getMinutes();
-                  let ss = da.getSeconds();
-                  da =
-                    [year, month, date].join("-") +
-                    " " +
-                    [hh, mm, ss].join(":");
-                  let publicTime = da;
+
+                  let publicTime =getDate();
                   let user_id = localStorage.getItem("user_id");
                   invitateToEnder({
                     user_id,
@@ -163,9 +146,10 @@ function ToInvitate() {
                       imgMes: "",
                       mediaMes: "",
                     },
-                    commentId: "[]",
+                    commentId:[],
                     category: state.categoryMes,
-                  });
+                    audit:"false"
+                  },'invitate');
                   changeContext("");
                 }
                 dispatch({ type: "noshowInvitate" });

@@ -4,6 +4,7 @@ import {GlobalContext} from './store/index'
 import "./App.scss";
 import "antd-mobile/dist/antd-mobile.css";
 import ToInvitate from "./views/Toinvitate/ToInvitate";
+import Comment from "./views/Comment/Comment";
 import { Progress } from "antd-mobile";
 
 // 刘益良页面
@@ -11,6 +12,8 @@ import Login_vcode from './views/Login_vcode'
 import Login_pas from './views/Login_pas'
 import Reg from './views/Reg'
 import Mine from './views/Mine'
+import Bianji from './views/Bianji'
+
 
 const Footer = lazy(() => import("./Footer"));
 const Home = lazy(() => import("./views/Home"));
@@ -26,6 +29,7 @@ function App() {
   return (
     <>
     {/* <Flex direction="column"> */}
+    <Comment/>
     <ToInvitate/>
     {/* <AddPicture/> */}
     <div className="flex-container" style={{display:state.showInvitate?"none":"flex"}}>
@@ -45,9 +49,11 @@ function App() {
             <Route path="/News" component={News}></Route>
 
             <Route path="/Mine" component={Mine}></Route>
+            <Route path="/Bianji" component={Bianji}></Route>
             <Route path="/Reg" component={Reg}></Route>
             <Route path="/Login_vcode" component={Login_vcode}></Route>
             <Route path="/Login_pas" component={Login_pas}></Route>
+
             <Redirect from="/" to="/home" exact></Redirect>
             <Route path="*" render={() => <div>404</div>}></Route>
           </Switch>

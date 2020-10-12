@@ -39,9 +39,9 @@ export function uploadImg(payload, callback1, callback2) {
     callback2(res);
   });
 }
-export function invitateToEnder(payload) {
+export function invitateToEnder(payload,col) {
   axios({
-    url: BASE_URL + "/invitate",
+    url: BASE_URL + col,
     method: "post",
     withCredentials: false,
     cancelToken: source.token,
@@ -51,7 +51,7 @@ export function invitateToEnder(payload) {
 export async function invitateFromEnder(payload = {}) {
   let req = "?";
   for (let i in payload) {
-    req += `${i}=payload[${i}]&`;
+    req += `${i}=${payload[i]}&`;
   }
   console.log("req=", req);
   let result = await axios({
@@ -62,5 +62,29 @@ export async function invitateFromEnder(payload = {}) {
     data: payload,
   });
   return result;
+}
+export function put(payload={}){
+    axios({
+        url:BASE_URL + '/invitate',
+        method:'put',
+        withCredentials:false,
+        cancelToken:source.token,
+        data:payload
+    })
+}
+export  function getDate(){
+  let da = new Date();
+  da = new Date(da);
+  let year = da.getFullYear();
+  let month = da.getMonth() + 1;
+  let date = da.getDate();
+  let hh = da.getHours();
+  let mm = da.getMinutes();
+  let ss = da.getSeconds();
+  da =
+    [year, month, date].join("-") +
+    " " +
+    [hh, mm, ss].join(":");
+  return da;
 }
 export default uploadMedia;

@@ -47,7 +47,7 @@ export default function () {
               />
               <Card.Body>
                 <div>{item.content.context}</div>
-                <video src={item.content.mediaMes}>
+                <video src={"http://www.ihuanu.cn/" + (item.content.mediaMes).slice(3)}>
                   This is content of `Card`
                 </video>
               </Card.Body>
@@ -68,7 +68,7 @@ export default function () {
               <Card.Body>
                 <div>{item.content.context}</div>
                 {item.content.imgMes.map((allitemimg) => (
-                  <img src={allitemimg} key={allitemimg}></img>
+                  <img src={"http://www.ihuanu.cn/"+allitemimg.slice(3)} key={allitemimg}></img>
                 ))}
               </Card.Body>
               <Card.Footer

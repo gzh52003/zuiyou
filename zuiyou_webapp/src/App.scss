@@ -20,11 +20,12 @@ body,
   flex-direction: column;
   background-color: white;
   .mainer {
-    flex: 13;
+    height: 94vh;
+    overflow-y: auto;
   }
 
   .am-tab-bar {
-    flex: 1;
+    height: 6vh;
     svg{
       font-size: 22px;
       z-index: 10;
