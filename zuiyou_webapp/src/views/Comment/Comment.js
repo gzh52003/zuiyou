@@ -85,6 +85,11 @@ export default function Comment() {
                       // 上传进度
                       let percent = progressEvent.loaded / progressEvent.total;
                       dispatch({ type: "percent", value: percent * 100 });
+                      if(percent===1)
+                      {
+                        Toast.success("发布成功", 1);
+                        dispatch({ type: "percent", value: 0});
+                       }
                     },
                     async (res) => {
                       let publicTime = getDate();
@@ -119,7 +124,8 @@ export default function Comment() {
                   commentId: commentIdArr,
                   _id: "5f82ea04e080261518504511",
                 });
-              }
+
+                }
             }}
           />
           <i
