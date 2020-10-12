@@ -30,8 +30,10 @@ function ToInvitate() {
   function uploadMediafinish(res) {
     console.log(res)
     if (res.data.code === 1||res.code===1) {
+
       Toast.success("发布成功", 1);
       dispatch({ type: "addCategory", value: "" });
+      dispatch({ type: "percent", value: 0});
       //数据提交到后端
 
       let publicTime = getDate();
@@ -78,7 +80,7 @@ function ToInvitate() {
       style={{
         height: "100%",
         width: "100%",
-        top: state.showInvitate ? "0%" : "100%",
+        top: state.showInvitate ? "0" : "100vh",
       }}
     >
       <AddCategory></AddCategory>

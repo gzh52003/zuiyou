@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef } from "react";
-import { Icon, SearchBar, ImagePicker, Toast } from "antd-mobile";
+import { Icon, SearchBar, ImagePicker, Toast ,Progress} from "antd-mobile";
 import { GlobalContext } from "../../store";
 import {
   uploadImg,
@@ -16,9 +16,9 @@ export default function Comment() {
   let [imgMes, changeimgMes] = useState(""); //图片内容
   return (
     <>
-      <div className="comment">
+      <div className="comment" style={{left:state.showComment?0:'100vw'}}>
         <div className="showner-box">
-          <Icon type="cross" size="md" className="cancel" onClick={() => {}} />
+          <Icon type="cross" size="md" className="cancel" onClick={() => {dispatch({type:'noshowComment'})}} />
           <h3>最右</h3>
           <Icon type="ellipsis" size="md" className="more" onClick={() => {}} />
         </div>
@@ -32,7 +32,7 @@ export default function Comment() {
               files={filesList}
               onChange={(file) => {
                 changFilesList(file);
-                // //选择文件并上传
+                //选择文件并上传
                 let formData = new FormData();
                 for (let i = 0; i < file.length; i++) {
                   formData.append("photos", file[i].file);
@@ -61,19 +61,9 @@ export default function Comment() {
                 changeContext("");
                 let user_id = localStorage.getItem("user_id");
                 let publicTime = getDate();
-                //获取帖子用户的commentId数组
-                const commentIdRes = await invitateFromEnder({
-                  invitateId: "5f82ea04e080261518504511",
-                });
-                var commentIdArr = commentIdRes.data.data[0].commentId;
-                commentIdArr.unshift(user_id);
-                //修改帖子用户的帖子信息
-                put({
-                  commentId: commentIdArr,
-                  _id: "5f82ea04e080261518504511",
-                });
+
                 if (filesList.length <= 0) {
-                  //评论内容存到数据库comment集合
+                //评论内容存到数据库comment集合
                   let payload = {
                     user_id, //评论用户的id
                     invitateId: "5f82ea04e080261518504511", //评论帖子的id
@@ -87,36 +77,48 @@ export default function Comment() {
                   };
 
                   invitateToEnder(payload, "/comment");
-                  return;
-                }
-                uploadImg(
-                  imgMes,
-                  (progressEvent) => {
-                    // 上传进度
-                    let percent = progressEvent.loaded / progressEvent.total;
-                    dispatch({ type: "percent", value: percent * 100 });
-                  },
-                  async (res) => {
-                    let publicTime = getDate();
-                    let user_id = localStorage.getItem("user_id");
-                    changFilesList([])
-                    console.log(res.data.data.uploadUrl)
-                    //评论内容存到数据库comment集合
-                    let payload = {
-                      user_id, //评论用户的id
-                      invitateId: "5f82ea04e080261518504511", //评论帖子的id
-                      content: {
-                        context,
-                        imgMes:res.data.data.uploadUrl,
-                      }, //评论的内容
-                      publicTime,
-                      audit: "false",
-                      favor: 0,
-                    };
 
-                    invitateToEnder(payload, "/comment");
-                  }
-                );
+                }else{
+                  uploadImg(
+                    imgMes,
+                    (progressEvent) => {
+                      // 上传进度
+                      let percent = progressEvent.loaded / progressEvent.total;
+                      dispatch({ type: "percent", value: percent * 100 });
+                    },
+                    async (res) => {
+                      let publicTime = getDate();
+                      let user_id = localStorage.getItem("user_id");
+                      changFilesList([]);
+                      console.log(res.data.data.uploadUrl);
+                      //评论内容存到数据库comment集合
+                      let payload = {
+                        user_id, //评论用户的id
+                        invitateId: "5f82ea04e080261518504511", //评论帖子的id
+                        content: {
+                          context,
+                          imgMes: res.data.data.uploadUrl,
+                        }, //评论的内容
+                        publicTime,
+                        audit: "false",
+                        favor: 0,
+                      };
+  
+                      invitateToEnder(payload, "/comment");
+                    }
+                  );
+                }
+                 //获取帖子用户的commentId数组
+                 const commentIdRes = await invitateFromEnder({
+                  invitateId: "5f82ea04e080261518504511",
+                });
+                var commentIdArr = commentIdRes.data.data[0].commentId;
+                commentIdArr.unshift(user_id);
+                //修改帖子用户的帖子信息
+                put({
+                  commentId: commentIdArr,
+                  _id: "5f82ea04e080261518504511",
+                });
               }
             }}
           />
@@ -130,6 +132,10 @@ export default function Comment() {
 
           <i className="iconfont icon-zhuanfa"></i>
         </div>
+      <div className="progress" style={{display:state.percent===0||state.percent===100?"none":"block"}}>
+           <Progress percent={state.percent}  position="normal" />
+           <span>内容正在发布中...</span>
+      </div>
       </div>
     </>
   );

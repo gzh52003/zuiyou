@@ -32,7 +32,7 @@ function App() {
     <Comment/>
     <ToInvitate/>
     {/* <AddPicture/> */}
-    <div className="flex-container" style={{display:state.showInvitate?"none":"flex"}}>
+    <div className="flex-container" >
         <Suspense
           fallback={
             <div>内容加载中</div>

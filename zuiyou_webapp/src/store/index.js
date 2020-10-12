@@ -4,6 +4,7 @@ const initialState = {
   showAddMedia: false,
   showAddPic: false,
   showAddCategory: false,
+  showComment:true,
   percent: 0,
   categoryMes: "",
 };
@@ -14,6 +15,10 @@ function rootReducer(state, action) {
       return { ...state, showInvitate: true };
     case "noshowInvitate":
       return { ...state, showInvitate: false };
+    case "showComment":
+      return { ...state, showComment: true };
+    case "noshowComment":
+      return { ...state, showComment: false };
     case "showAddMedia":
       return { ...state, showAddMedia: true };
     case "noshowAddMedia":

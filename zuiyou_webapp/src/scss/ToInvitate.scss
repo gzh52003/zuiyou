@@ -1,11 +1,15 @@
 .ToInvitate {
   position: absolute;
-  transition: 0.5s;
+  z-index: 999;
+  transition: 0.8s;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  background: rgb(255, 255, 255);
+  top: 100vh;
+  left: 0;
   .showner-box {
-    background: rgba(255, 255, 255, 0);
+    // background: rgba(255, 255, 255, 0);
     &::after {
       content: "";
       clear: both;
@@ -35,7 +39,7 @@
     }
   }
   .chose-category {
-    background: rgba(128, 128, 128, 0.2);
+    background: rgb(243, 242, 242);
     height: 5vh;
     span:nth-of-type(1) {
       line-height: 5vh;
