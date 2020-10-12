@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext} from "react";
 import { Card } from "antd-mobile";
+import {MessageOutlined} from "@ant-design/icons"
 import { invitateFromEnder } from "../utils/axios";
 import Item from "antd-mobile/lib/popover/Item";
+import {GlobalContext} from '../store/index'
+
 export default function () {
   const [data, setData] = useState();
   const [rendersuccess, setrendersuccess] = useState();
   var mapsuccessdata;
+  const { dispatch } = useContext(GlobalContext)
   let res = useEffect(() => {
     async function fetchData() {
       // You can await here
@@ -34,6 +38,10 @@ export default function () {
       setrendersuccess(result);
     }
   }, [data]);
+ const addinvitate_id = (_id) => {
+   console.log("wo是运输租售", _id)
+   dispatch({type:"message_id",_id:_id})
+  }
   let datamap = (data) => {
     if (data) {
       let mapdata = data.map((item, index) => {
@@ -53,7 +61,7 @@ export default function () {
               </Card.Body>
               <Card.Footer
                 content="footer content"
-                extra={<div>extra footer content</div>}
+                extra={<div><MessageOutlined onClick={()=>addinvitate_id(item._id)}/></div>}
               />
             </Card>
           );
@@ -73,7 +81,7 @@ export default function () {
               </Card.Body>
               <Card.Footer
                 content="footer content"
-                extra={<div>extra footer content</div>}
+                extra={<div><MessageOutlined onClick={()=>addinvitate_id(item._id)} /></div>}
               />
             </Card>
           );
@@ -90,7 +98,7 @@ export default function () {
               </Card.Body>
               <Card.Footer
                 content="footer content"
-                extra={<div>extra footer content</div>}
+                extra={<div><MessageOutlined onClick={()=>addinvitate_id(item._id)} /></div>}
               />
             </Card>
           );
@@ -142,8 +150,7 @@ export default function () {
         />
       </Card> */}
       <div>{rendersuccess ? rendersuccess.map((item) => item) : ""}</div>
-      <div></div>
-      <button onClick={() => clickgetinvitate()}>点击获取</button>
+
     </div>
   );
 }

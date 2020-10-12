@@ -35,6 +35,8 @@ function rootReducer(state, action) {
       return { ...state, percent: action.value };
     case "addCategory":
       return { ...state, categoryMes: action.value };
+    case "message_id":
+      return {...state,message_id:action._id}
     default:
       return state;
   }
