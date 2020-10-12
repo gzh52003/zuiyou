@@ -7,21 +7,25 @@
 
     .showner-box {
         height: 7vh;
-        background: wheat;
+        background: #fff;
         display: flex;
         justify-content: space-between;
         padding: 0 3vw;
         border-bottom: 1px solid rgba(128, 128, 128, 0.2);
         color: rgb(128, 128, 128);
-
         .cancel {
             float: left;
             height: 7vh;
             line-height: 7vh;
+
         }
 
         h3 {
             color: black;
+            font-size: 3vh;
+            height: 7vh;
+            line-height: 7vh;
+            margin: 0;
         }
 
         .more {
@@ -29,16 +33,64 @@
             line-height: 7vh;
             float: right;
         }
-
+        .am-icon-md {
+            width: 3vh;
+        }
     }
 
     .content {
         flex: 1;
         position: relative;
-        .imgPicker {
-            .am-image-picker-upload-btn {
-              opacity: 0;
-          }
+
+
+        .imgPicker-box {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: auto;
+            height: 16vw;
+            overflow: hidden;
+            background: snow;
+            padding-left: 1vw;
+            z-index: 999;
+
+            .imgPicker {
+                .am-flexbox-item,
+                .am-image-picker-item {
+                    width: 15vw;
+                    height: 15vw;
+
+                }
+                .am-image-picker-list {
+                    position: relative;
+                    padding: 1vw;
+                    bottom: 0px;
+                    left: 0px;
+                    right: 0px;
+                    margin: 0px auto;
+                }
+                .am-image-picker-item-remove {
+                    right: 0;
+                    top: 0;
+                    width: 24%;
+                    height: 24%;
+                    background-size: 100% auto;
+                }
+                .am-image-picker-item {
+                    position: relative;
+                    /* top: 0px; */
+                    bottom: 0px;
+                    left: 0px;
+                    right: 0px;
+                    margin: 0 auto;
+                }
+                .am-image-picker-upload-btn {
+                    opacity: 0;
+                    position: absolute;
+                    float: left;
+                    z-index: -1;
+                }
+            }
 
         }
     }
@@ -53,22 +105,36 @@
         i {
             height: 7vh;
             line-height: 7vh;
-            font-size: 20px;
+            font-size: 3vh;
         }
 
         .input {
             width: 60vw;
             background: #fff;
             padding: 0;
+            height: 7vh;
 
             .am-search-synthetic-ph,
             .am-search-value {
                 background: #efeff4;
+                height: 4vh;
                 border-radius: 20px;
             }
-
+            .am-search-input {
+                height: 4vh;
+            }
+            .am-search-clear {
+                height: 2vh;
+            }
             .am-search-synthetic-ph-icon {
                 display: none;
+            }
+            .am-search-synthetic-ph-container{
+                font-size: 12px;
+                float: left;
+                height: 4vh;
+                line-height: 4vh;
+                margin-left:20vw;
             }
         }
     }
